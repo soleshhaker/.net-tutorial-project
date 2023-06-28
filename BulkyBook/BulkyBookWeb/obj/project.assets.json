@@ -3931,16 +3931,6 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XDocument.dll": {}
         }
-      },
-      "BulkyBookRazor_Temp/1.0.0": {
-        "type": "project",
-        "framework": "Unsupported,Version=v0.0",
-        "compile": {
-          "bin/placeholder/BulkyBookRazor_Temp.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/BulkyBookRazor_Temp.dll": {}
-        }
       }
     }
   },
@@ -11236,16 +11226,10 @@
         "system.xml.xdocument.4.3.0.nupkg.sha512",
         "system.xml.xdocument.nuspec"
       ]
-    },
-    "BulkyBookRazor_Temp/1.0.0": {
-      "type": "project",
-      "path": "../BulkyBookRazor_Temp/BulkyBookRazor_Temp.csproj",
-      "msbuildProject": "../BulkyBookRazor_Temp/BulkyBookRazor_Temp.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "BulkyBookRazor_Temp >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 7.0.7",
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.7",
       "Microsoft.EntityFrameworkCore.Tools >= 7.0.7",
@@ -11279,11 +11263,7 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
-          "projectReferences": {
-            "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\BulkyBookRazor_Temp\\BulkyBookRazor_Temp.csproj": {
-              "projectPath": "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\BulkyBookRazor_Temp\\BulkyBookRazor_Temp.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
@@ -11337,16 +11317,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1201",
-      "level": "Error",
-      "message": "Project BulkyBookRazor_Temp is not compatible with net6.0 (.NETCoreApp,Version=v6.0). Project BulkyBookRazor_Temp supports: net7.0 (.NETCoreApp,Version=v7.0)",
-      "libraryId": "BulkyBookRazor_Temp",
-      "targetGraphs": [
-        "net6.0"
-      ]
-    }
-  ]
+  }
 }

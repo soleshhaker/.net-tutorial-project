@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "dgSpecHash": "5s5t4YooHg7f6gvTzWEGZfWzjU06PPxAIYzWhgvobo7+wUJIg/HT78Cml+2yxMQeHoM2wL7jiimOBquO/uNSww==",
-  "success": false,
+  "dgSpecHash": "rcRUs2+g19tiuxsTPFme03w7+1HnHkhQu9yDHrHl4WAJ25hVgfD5gA4bbD5faqpg/a6V5P57fsao46qs0zMROg==",
+  "success": true,
   "projectFilePath": "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\BulkyBookWeb\\BulkyBookWeb.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Tobi\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
@@ -230,15 +230,5 @@
     "C:\\Users\\Tobi\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\Tobi\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1201",
-      "level": "Error",
-      "message": "Project BulkyBookRazor_Temp is not compatible with net6.0 (.NETCoreApp,Version=v6.0). Project BulkyBookRazor_Temp supports: net7.0 (.NETCoreApp,Version=v7.0)",
-      "libraryId": "BulkyBookRazor_Temp",
-      "targetGraphs": [
-        "net6.0"
-      ]
-    }
-  ]
+  "logs": []
 }
