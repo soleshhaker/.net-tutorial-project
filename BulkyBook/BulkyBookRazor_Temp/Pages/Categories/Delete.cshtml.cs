@@ -20,44 +20,22 @@ namespace BulkyBookRazor_Temp.Pages.Categories
         }
 
         [BindProperty]
-      public Category Category { get; set; } = default!;
+        public Category Category { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public void OnGet(int? id)
         {
-            if (id == null || _context.Categories == null)
-            {
-                return NotFound();
-            }
-
-            var category = await _context.Categories.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (category == null)
-            {
-                return NotFound();
-            }
-            else 
-            {
-                Category = category;
-            }
-            return Page();
+            if (id != null || id != 0) Category = _context.Categories.First(c => c.Id == id);
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public IActionResult OnPost()
         {
-            if (id == null || _context.Categories == null)
-            {
-                return NotFound();
-            }
-            var category = await _context.Categories.FindAsync(id);
+            Category? obj = _context.Categories.Find(Category.Id);
+            if(obj == null)   return NotFound();
 
-            if (category != null)
-            {
-                Category = category;
-                _context.Categories.Remove(Category);
-                await _context.SaveChangesAsync();
-            }
-
-            return RedirectToPage("./Index");
+            _context.Categories.Remove(obj);
+            _context.SaveChanges();
+            TempData["success"] = "Category deleted succesfully";
+            return RedirectToPage("Index");
         }
     }
 }

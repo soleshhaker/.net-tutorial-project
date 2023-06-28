@@ -23,55 +23,23 @@ namespace BulkyBookRazor_Temp.Pages.Categories
         [BindProperty]
         public Category Category { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public void OnGet(int? id)
         {
-            if (id == null || _context.Categories == null)
-            {
-                return NotFound();
-            }
-
-            var category =  await _context.Categories.FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-            Category = category;
-            return Page();
+            if (id != null || id != 0) Category = _context.Categories.First(c => c.Id == id);
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
-            if (!ModelState.IsValid)
+            if (Category.Name == Category.DisplayOrder.ToString())
             {
-                return Page();
+                ModelState.AddModelError("name", "The DisplayOrder cannot exactly match the Name.");
             }
+            if (!ModelState.IsValid) return Page();
 
-            _context.Attach(Category).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CategoryExists(Category.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            _context.Categories.Update(Category);
+            _context.SaveChanges();
+            TempData["success"] = "Category updated succesfully";
             return RedirectToPage("Index");
-        }
-
-        private bool CategoryExists(int id)
-        {
-          return (_context.Categories?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
