@@ -66,7 +66,7 @@ namespace BulkyBookRazor_Temp.Pages.Categories
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("Index");
         }
 
         private bool CategoryExists(int id)

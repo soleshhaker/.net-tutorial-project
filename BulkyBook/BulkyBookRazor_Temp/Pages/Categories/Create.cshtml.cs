@@ -39,7 +39,7 @@ namespace BulkyBookRazor_Temp.Pages.Categories
             _context.Categories.Add(Category);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("Index");
         }
     }
 }
