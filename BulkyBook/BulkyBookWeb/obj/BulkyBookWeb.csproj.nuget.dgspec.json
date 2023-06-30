@@ -4,6 +4,198 @@
     "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\BulkyBookWeb\\BulkyBookWeb.csproj": {}
   },
   "projects": {
+    "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\Bulky.DataAccess\\Bulky.DataAccess.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\Bulky.DataAccess\\Bulky.DataAccess.csproj",
+        "projectName": "Bulky.DataAccess",
+        "projectPath": "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\Bulky.DataAccess\\Bulky.DataAccess.csproj",
+        "packagesPath": "C:\\Users\\Tobi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\Bulky.DataAccess\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Tobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\Bulky.Models\\Bulky.Models.csproj": {
+                "projectPath": "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\Bulky.Models\\Bulky.Models.csproj"
+              },
+              "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\Bulky.Utility\\Bulky.Utility.csproj": {
+                "projectPath": "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\Bulky.Utility\\Bulky.Utility.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.8, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[7.0.7, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\Bulky.Models\\Bulky.Models.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\Bulky.Models\\Bulky.Models.csproj",
+        "projectName": "Bulky.Models",
+        "projectPath": "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\Bulky.Models\\Bulky.Models.csproj",
+        "packagesPath": "C:\\Users\\Tobi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\Bulky.Models\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Tobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\Bulky.Utility\\Bulky.Utility.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\Bulky.Utility\\Bulky.Utility.csproj",
+        "projectName": "Bulky.Utility",
+        "projectPath": "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\Bulky.Utility\\Bulky.Utility.csproj",
+        "packagesPath": "C:\\Users\\Tobi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\Bulky.Utility\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Tobi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\BulkyBookWeb\\BulkyBookWeb.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -18,7 +210,7 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net6.0"
+          "net7.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -26,9 +218,16 @@
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net6.0": {
-            "targetAlias": "net6.0",
-            "projectReferences": {}
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\Bulky.DataAccess\\Bulky.DataAccess.csproj": {
+                "projectPath": "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\Bulky.DataAccess\\Bulky.DataAccess.csproj"
+              },
+              "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\Bulky.Models\\Bulky.Models.csproj": {
+                "projectPath": "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\Bulky.Models\\Bulky.Models.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -38,26 +237,26 @@
         }
       },
       "frameworks": {
-        "net6.0": {
-          "targetAlias": "net6.0",
+        "net7.0": {
+          "targetAlias": "net7.0",
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[7.0.7, )"
+              "version": "[7.0.8, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[7.0.7, )"
+              "version": "[7.0.8, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[7.0.7, )"
+              "version": "[7.0.8, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
-              "version": "[6.0.14, )"
+              "version": "[7.0.7, )"
             }
           },
           "imports": [

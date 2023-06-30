@@ -1,7 +1,7 @@
-﻿using BulkyBookWeb.Data;
-using BulkyBookWeb.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Net.Mail;
+using Bulky.DataAccess.Data;
+using Bulky.Models;
 
 namespace BulkyBookWeb.Controllers
 {
