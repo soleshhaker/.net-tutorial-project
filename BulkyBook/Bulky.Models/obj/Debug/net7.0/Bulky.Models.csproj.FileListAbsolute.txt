@@ -10,3 +10,5 @@ C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\Bulky.Models\obj\Debug\net7.0\Bulky.Mo
 C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\Bulky.Models\obj\Debug\net7.0\refint\Bulky.Models.dll
 C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\Bulky.Models\obj\Debug\net7.0\Bulky.Models.pdb
 C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\Bulky.Models\obj\Debug\net7.0\ref\Bulky.Models.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\Bulky.Models\bin\Debug\net7.0\Bulky.Models.runtimeconfig.json
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\Bulky.Models\obj\Debug\net7.0\Bulky.Models.genruntimeconfig.cache

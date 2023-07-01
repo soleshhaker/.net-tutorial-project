@@ -1,0 +1,74 @@
+﻿@model Product
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient m-lg-0 py-3">
+        <div class="col-12 text-center">
+            <h2 class="text-white py-2">Delete Product</h2>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <form method="post">
+            <input asp-for="Id" hidden />
+            <div class="border p-3 mt-4">
+                <div class="form-floating py-2 col-12">
+                    <label asp-for="Title" class="form-label"></label>
+                    <input asp-for="Title" disabled class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <label asp-for="Description" class="form-label"></label>
+                    <input asp-for="Description" disabled class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <label asp-for="ISBN" class="form-label"></label>
+                    <input asp-for="ISBN" disabled class="form-control" />
+                    <span asp-validation-for="ISBN" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <label asp-for="Author" class="form-label"></label>
+                    <input asp-for="Author" disabled class="form-control" />
+                    <span asp-validation-for="Author" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <label asp-for="ListPrice" class="form-label"></label>
+                    <input asp-for="ListPrice" disabled class="form-control" />
+                    <span asp-validation-for="ListPrice" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <label asp-for="Price" class="form-label"></label>
+                    <input asp-for="Price" disabled class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <label asp-for="Price50" class="form-label"></label>
+                    <input asp-for="Price50" disabled class="form-control" />
+                    <span asp-validation-for="Price50" class="text-danger"></span>
+                </div>
+                <div class="form-floating py-2 col-12">
+                    <label asp-for="Price100" class="form-label"></label>
+                    <input asp-for="Price100" disabled class="form-control" />
+                    <span asp-validation-for="Price100" class="text-danger"></span>
+                </div>
+                <div class="row pt-2">
+                    <div class="col-6 col-md-3">
+                        <button type="submit" class="btn btn-primary form-control">Delete</button>
+                    </div>
+                    <div class="col-6 col-md-3">
+
+                        <a asp-controller="Product" asp-action="Index" class="btn btn-outline-primary border form-control">
+                            Back to List
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts{
+    @{
+<partial name="_ValidationScriptsPartial" />
+    }
+}
