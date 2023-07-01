@@ -4,8 +4,9 @@ using Bulky.DataAccess.Data;
 using Bulky.Models;
 using Bulky.DataAccess.Repository.IRepository;
 
-namespace BulkyBookWeb.Controllers
+namespace BulkyBookWeb.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -19,11 +20,11 @@ namespace BulkyBookWeb.Controllers
             IEnumerable<Category> objCategoryList = _unitOfWork.Category.GetAll();
             return View(objCategoryList);
         }
-        
+
         //GET
         public IActionResult Create()
         {
-            return View();  
+            return View();
         }
 
         //POST
@@ -45,8 +46,8 @@ namespace BulkyBookWeb.Controllers
         //EDIT
         public IActionResult Edit(int? id)
         {
-            if(id==null || id == 0) return NotFound();
-            
+            if (id == null || id == 0) return NotFound();
+
             var categoryFromDb = _unitOfWork.Category.GetFirstOrDefault(c => c.Id == id);
             if (categoryFromDb == null) return NotFound();
 
@@ -79,7 +80,7 @@ namespace BulkyBookWeb.Controllers
 
             return View(categoryFromDb);
         }
-        [HttpPost,ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeletePOST(int? id)
         {
