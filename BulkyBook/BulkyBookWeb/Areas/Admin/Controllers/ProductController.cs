@@ -11,19 +11,20 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        public ProductController(IUnitOfWork unitOfWork)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
         {
-            IEnumerable<Product> objProductList = _unitOfWork.Product.GetAll();
+            IEnumerable<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category");
             return View(objProductList);
         }
 
-        //GET
-        public IActionResult Create()
+        public IActionResult Upsert(int? id)
         {
             ProductViewModel productView = new()
             {
@@ -34,17 +35,60 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                 }),
                 Product = new Product()
             };
-            return View(productView);
+            if (id == null || id == 0)
+            {
+                //create
+                return View(productView);
+            }
+            else
+            {
+                //update
+                productView.Product = _unitOfWork.Product.GetFirstOrDefault(x => x.Id == id);
+                return View(productView);
+            }
         }
 
         //POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(ProductViewModel productViewModel)
+        public IActionResult Upsert(ProductViewModel productViewModel, IFormFile? file)
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Product.Add(productViewModel.Product);
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+                if(file != null)
+                {
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    string productPath = Path.Combine(wwwRootPath, @"images\product");
+
+                    if (!string.IsNullOrEmpty(productViewModel.Product.ImageURL))
+                    {
+                        //delete old image
+                        var oldImagePath = Path.Combine(wwwRootPath, productViewModel.Product.ImageURL.TrimStart('\\'));
+
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }
+
+                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    productViewModel.Product.ImageURL = @"\images\product\" + fileName;
+                }
+
+                if(productViewModel.Product.Id == 0)
+                {
+                    _unitOfWork.Product.Add(productViewModel.Product);
+                }
+                else
+                {
+                    _unitOfWork.Product.Update(productViewModel.Product);
+
+                }
                 _unitOfWork.Save();
                 TempData["success"] = "Product created succesfully";
                 return RedirectToAction(nameof(Index));
@@ -60,50 +104,35 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                 return View(productViewModel);
             }
         }
-        //EDIT
-        public IActionResult Edit(int? id)
+        #region API CALLS
+
+        [HttpGet]
+        public IActionResult GetAll()
         {
-            if (id == null || id == 0) return NotFound();
-
-            var productFromDb = _unitOfWork.Product.GetFirstOrDefault(c => c.Id == id);
-            if (productFromDb == null) return NotFound();
-
-            return View(productFromDb);
+            IEnumerable<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category");
+            return Json(new { data = objProductList });
         }
-
-        //EDIT
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(Product obj)
-        {
-            if (!ModelState.IsValid) return View(obj);
-
-            _unitOfWork.Product.Update(obj);
-            _unitOfWork.Save();
-            TempData["success"] = "Product edited succesfully";
-            return RedirectToAction(nameof(Index));
-        }
-        //DELETE
+        [HttpDelete]
         public IActionResult Delete(int? id)
         {
-            if (id == null || id == 0) return NotFound();
+            var productToBeDeleted = _unitOfWork.Product.GetFirstOrDefault(x => x.Id == id);
+            if(productToBeDeleted == null)
+            {
+                return Json(new {success = false, message = "Error while deleting"});
+            }
 
-            var productFromDb = _unitOfWork.Product.GetFirstOrDefault(c => c.Id == id);
-            if (productFromDb == null) return NotFound();
+            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath,
+                                productToBeDeleted.ImageURL.TrimStart('\\'));
 
-            return View(productFromDb);
-        }
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeletePOST(int? id)
-        {
-            var productFromDb = _unitOfWork.Product.GetFirstOrDefault(c => c.Id == id);
-            if (productFromDb == null) return NotFound();
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
 
-            _unitOfWork.Product.Remove(productFromDb);
+            _unitOfWork.Product.Remove(productToBeDeleted);
             _unitOfWork.Save();
-            TempData["success"] = "Product deleted succesfully";
-            return RedirectToAction(nameof(Index));
+            return Json(new { success = true, message = "Delete Successful" });
         }
+        #endregion
     }
 }
