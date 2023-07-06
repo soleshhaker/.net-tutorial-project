@@ -48,24 +48,56 @@ namespace Bulky.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDateTime = new DateTime(2023, 7, 6, 9, 36, 2, 80, DateTimeKind.Local).AddTicks(3446),
+                            CreatedDateTime = new DateTime(2023, 7, 6, 13, 23, 7, 292, DateTimeKind.Local).AddTicks(8096),
                             DisplayOrder = 1,
                             Name = "Action"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDateTime = new DateTime(2023, 7, 6, 9, 36, 2, 80, DateTimeKind.Local).AddTicks(3498),
+                            CreatedDateTime = new DateTime(2023, 7, 6, 13, 23, 7, 292, DateTimeKind.Local).AddTicks(8136),
                             DisplayOrder = 2,
                             Name = "SciFi"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDateTime = new DateTime(2023, 7, 6, 9, 36, 2, 80, DateTimeKind.Local).AddTicks(3501),
+                            CreatedDateTime = new DateTime(2023, 7, 6, 13, 23, 7, 292, DateTimeKind.Local).AddTicks(8139),
                             DisplayOrder = 3,
                             Name = "History"
                         });
+                });
+
+            modelBuilder.Entity("Bulky.Models.Company", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StreetAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Companies");
                 });
 
             modelBuilder.Entity("Bulky.Models.Product", b =>
