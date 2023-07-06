@@ -268,3 +268,7 @@ C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Microsof
 C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
 C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Microsoft.AspNetCore.Identity.UI.dll
 C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Microsoft.Extensions.FileProviders.Embedded.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\EntityFramework.SqlServer.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\EntityFramework.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Microsoft.AspNet.Identity.EntityFramework.dll
