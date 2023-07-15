@@ -48,21 +48,21 @@ namespace Bulky.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDateTime = new DateTime(2023, 7, 15, 11, 18, 16, 927, DateTimeKind.Local).AddTicks(8825),
+                            CreatedDateTime = new DateTime(2023, 7, 15, 13, 41, 46, 564, DateTimeKind.Local).AddTicks(65),
                             DisplayOrder = 1,
                             Name = "Action"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDateTime = new DateTime(2023, 7, 15, 11, 18, 16, 927, DateTimeKind.Local).AddTicks(8870),
+                            CreatedDateTime = new DateTime(2023, 7, 15, 13, 41, 46, 564, DateTimeKind.Local).AddTicks(115),
                             DisplayOrder = 2,
                             Name = "SciFi"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDateTime = new DateTime(2023, 7, 15, 11, 18, 16, 927, DateTimeKind.Local).AddTicks(8872),
+                            CreatedDateTime = new DateTime(2023, 7, 15, 13, 41, 46, 564, DateTimeKind.Local).AddTicks(117),
                             DisplayOrder = 3,
                             Name = "History"
                         });
@@ -179,6 +179,9 @@ namespace Bulky.DataAccess.Migrations
 
                     b.Property<string>("PostalCode")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SessionId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ShippingDate")

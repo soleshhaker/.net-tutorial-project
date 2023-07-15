@@ -272,3 +272,4 @@ C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\EntityFr
 C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\EntityFramework.dll
 C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Microsoft.AspNet.Identity.Core.dll
 C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Stripe.net.dll
