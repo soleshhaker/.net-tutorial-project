@@ -11,6 +11,7 @@ namespace Bulky.Models
 {
     public class OrderHeader
     {
+        [Key]
         public int Id { get; set; }
         public string ApplicationUserId { get; set; }
         [ForeignKey("ApplicationUserId")]

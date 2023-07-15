@@ -48,21 +48,21 @@ namespace Bulky.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedDateTime = new DateTime(2023, 7, 15, 9, 28, 12, 882, DateTimeKind.Local).AddTicks(1223),
+                            CreatedDateTime = new DateTime(2023, 7, 15, 11, 18, 16, 927, DateTimeKind.Local).AddTicks(8825),
                             DisplayOrder = 1,
                             Name = "Action"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedDateTime = new DateTime(2023, 7, 15, 9, 28, 12, 882, DateTimeKind.Local).AddTicks(1273),
+                            CreatedDateTime = new DateTime(2023, 7, 15, 11, 18, 16, 927, DateTimeKind.Local).AddTicks(8870),
                             DisplayOrder = 2,
                             Name = "SciFi"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedDateTime = new DateTime(2023, 7, 15, 9, 28, 12, 882, DateTimeKind.Local).AddTicks(1275),
+                            CreatedDateTime = new DateTime(2023, 7, 15, 11, 18, 16, 927, DateTimeKind.Local).AddTicks(8872),
                             DisplayOrder = 3,
                             Name = "History"
                         });
