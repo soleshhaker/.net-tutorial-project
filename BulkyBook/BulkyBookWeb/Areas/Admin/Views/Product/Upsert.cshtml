@@ -3,13 +3,13 @@
 <div class="card shadow border-0 mt-4">
     <div class="card-header bg-secondary bg-gradient m-lg-0 py-3">
         <div class="col-12 text-center">
-            <h2 class="text-white py-2">@(Model.Product.Id!=0?"Update":"Create") Product</h2>
+            <h2 class="text-white py-2">@(Model.Product.Id != 0 ? "Update" : "Create") Product</h2>
         </div>
     </div>
     <div class="card-body p-4">
         <form method="post" class="row" enctype="multipart/form-data">
             <input asp-for="Product.Id" hidden />
-            <input asp-for="Product.ImageURL" hidden />
+            @*<input asp-for="Product.ImageURL" hidden />*@
             <div class="row">
                 <div class="col-10">
                     <div class="border p-3">
@@ -60,8 +60,8 @@
                             <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
                         </div>
                         <div class="form-floating py-2 col-12">
-                            <label asp-for="Product.ImageURL" class="form-label"></label>
-                            <input type="file" name="file" class="form-control" />
+                            <label asp-for="Product.ProductImages" class="form-label"></label>
+                            <input type="file" name="files" class="form-control" multiple />
                         </div>
                         <div class="row pt-2">
                             <div class="col-6 col-md-3">
@@ -85,8 +85,19 @@
 
                 </div>
                 <div class="col-2">
-                    <img src="@Model.Product.ImageURL" width="100%"
-                    style="border-radius:5px; border:1px solid #bbb9b9" />
+                    @if (Model.Product.ProductImages != null)
+                    {
+                        foreach (var image in Model.Product.ProductImages)
+                        {
+                            <div class="border p-1 m-2 text-center">
+                                <img src="@image.ImageUrl" width="100%"
+                                     style="border-radius:5px; border:1px solid #bbb9b9" />
+                                <a asp-action="DeleteImage" class="btn btn-danger" asp-route-imageId="@image.Id">
+                                    <i class="bi bi-trash-fill">Delete</i>
+                                </a>
+                            </div>
+                        }
+                    }
                 </div>
             </div>
         </form>
@@ -97,7 +108,7 @@
     <script>
         tinymce.init({
             selector: 'textarea',
-            plugins: 'anchor autolink charmap codesample emoticons lists table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
+            plugins: 'anchor autolink charmap emoticons lists table visualblocks wordcount',
             toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
             tinycomments_mode: 'embedded',
             tinycomments_author: 'Author name',
@@ -106,6 +117,7 @@
                 { value: 'Email', title: 'Email' },
             ]
         });
+
     </script>
     @{
         <partial name="_ValidationScriptsPartial" />
