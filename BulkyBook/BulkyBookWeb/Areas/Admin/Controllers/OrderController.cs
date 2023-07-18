@@ -136,7 +136,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                 .GetAll(x => x.OrderHeaderId == OrderViewModel.OrderHeader.Id, includeProperties: "Product");
 
             //stripe
-            var domain = "https://localhost:44313/";
+            var domain = Request.Scheme + "://" + Request.Host.Value + "/";
             var options = new SessionCreateOptions
             {
 

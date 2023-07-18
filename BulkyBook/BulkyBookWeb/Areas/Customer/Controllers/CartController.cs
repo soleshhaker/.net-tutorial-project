@@ -118,7 +118,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             {
                 //regular customer account
                 //stripe logic
-                var domain = "https://localhost:44313/";
+                var domain = Request.Scheme + "://" + Request.Host.Value + "/";
                 var options = new SessionCreateOptions
                 {
 
