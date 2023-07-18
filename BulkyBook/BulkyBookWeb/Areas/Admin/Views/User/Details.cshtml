@@ -16,7 +16,7 @@
                     <input asp-for="ApplicationUser.Name" class="form-control" />
                     <span asp-validation-for="ApplicationUser.Name" class="text-danger"></span>
                 </div>
-                <div class="form-floating mb-3 col-md-6">
+                <div class="form-floating py-2 col-12">
                     <select asp-for="ApplicationUser.Role" asp-items="@Model.RoleList" class="form-select">
                         <option disabled selected>-Select Role-</option>
                     </select>
@@ -46,8 +46,8 @@
     <partial name="_ValidationScriptsPartial" />
     <script>
         $(document).ready(function () {
-            $('#ApplicationUser.Role').change(function () {
-                var selection = $('#ApplicationUser.Role Option:Selected').text();
+            $('#ApplicationUser_Role').change(function () {
+                var selection = $('#ApplicationUser_Role Option:Selected').text();
                 if (selection == 'Company') {
                     $('#CompanyId').show();
                 }
