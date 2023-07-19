@@ -75,5 +75,10 @@ namespace Bulky.DataAccess.Repository
         {
             dbSet.RemoveRange(entitites);
         }
+
+        public virtual void Update(T entity)
+        {
+            //implement in respective repositories
+        }
     }
 }
