@@ -274,3 +274,7 @@ C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Microsof
 C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Microsoft.AspNet.Identity.EntityFramework.dll
 C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Stripe.net.dll
 C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.Facebook.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Microsoft.OpenApi.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll

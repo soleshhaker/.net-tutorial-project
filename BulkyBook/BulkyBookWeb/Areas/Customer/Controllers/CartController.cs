@@ -11,6 +11,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
 {
     [Area("customer")]
     [Authorize]
+    [Route("[area]/[controller]")]
     public class CartController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -21,6 +22,8 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
         {
             _unitOfWork = unitOfWork;
         }
+
+        [HttpGet("Index")]
         public IActionResult Index()
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
@@ -44,6 +47,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             return View(ShoppingCartViewModel);
         }
 
+        [HttpGet("Summary")]
         public IActionResult Summary()
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
@@ -70,8 +74,8 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             }
             return View(ShoppingCartViewModel);
         }
-        [HttpPost]
-        [ActionName("Summary")]
+        [HttpPost("SummaryPOST")]
+        [ActionName("SummaryPOST")]
         public IActionResult SummaryPOST()
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
@@ -160,6 +164,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             return RedirectToAction(nameof(OrderConfirmation), new { id = ShoppingCartViewModel.OrderHeader.Id });
         }
 
+        [HttpGet("OrderConfirmation")]
         public IActionResult OrderConfirmation(int id)
         {
             OrderHeader orderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(x => x.Id == id, includeProperties: "ApplicationUser");
@@ -188,6 +193,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             return View(id);
         }
 
+        [HttpPost("Plus")]
         public IActionResult Plus(int cartId)
         {
             var cartFromDb = _unitOfWork.ShoppingCart.GetFirstOrDefault(x => x.Id == cartId);
@@ -196,6 +202,8 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             _unitOfWork.Save();
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpPost("Minus")]
         public IActionResult Minus(int cartId)
         {
             var cartFromDb = _unitOfWork.ShoppingCart.GetFirstOrDefault(x => x.Id == cartId);
@@ -213,6 +221,8 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             _unitOfWork.Save();
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpPost("Remove")]
         public IActionResult Remove(int cartId)
         {
             var cartFromDb = _unitOfWork.ShoppingCart.GetFirstOrDefault(x => x.Id == cartId);
@@ -221,6 +231,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             _unitOfWork.Save();
             return RedirectToAction(nameof(Index));
         }
+
         private double GetPriceBasedOnQuantity(ShoppingCart shoppingCart)
         {
             if (shoppingCart.Count <= 50)

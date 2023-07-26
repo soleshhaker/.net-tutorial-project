@@ -14,6 +14,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 {
     [Area("admin")]
     [Authorize]
+    [Route("[area]/[controller]")]
     public class OrderController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -24,11 +25,14 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        [HttpGet("Index")]
         public IActionResult Index()
         {
             return View();
         }
 
+        [HttpGet]
+        [Route("Details")]
         public IActionResult Details(int orderId)
         {
             OrderViewModel = new()
@@ -41,6 +45,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 
         [HttpPost]
         [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
+        [Route("UpdateOrderDetail")]
         public IActionResult UpdateOrderDetail()
         {
             var orderHeaderFromDb = _unitOfWork.OrderHeader.GetFirstOrDefault(x => x.Id == OrderViewModel.OrderHeader.Id);
@@ -68,6 +73,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 
         [HttpPost]
         [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
+        [Route("StartProcessing")]
         public IActionResult StartProcessing()
         {
             _unitOfWork.OrderHeader.UpdateStatus(OrderViewModel.OrderHeader.Id, SD.StatusInProcess);
@@ -79,6 +85,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 
         [HttpPost]
         [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
+        [Route("ShipOrder")]
         public IActionResult ShipOrder()
         {
             var orderHeaderFromDb = _unitOfWork.OrderHeader.GetFirstOrDefault(x => x.Id == OrderViewModel.OrderHeader.Id);
@@ -100,6 +107,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 
         [HttpPost]
         [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
+        [Route("CancelOrder")]
         public IActionResult CancelOrder()
         {
             var orderHeaderFromDb = _unitOfWork.OrderHeader.GetFirstOrDefault(x => x.Id == OrderViewModel.OrderHeader.Id);
@@ -127,7 +135,8 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [ActionName("Details")]
+        [ActionName("Details_PAY_NOW")]
+        [Route("Details_PAY_NOW")]
         public IActionResult Details_PAY_NOW()
         {
             OrderViewModel.OrderHeader = _unitOfWork.OrderHeader
@@ -171,6 +180,9 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             Response.Headers.Add("Location", session.Url);
             return new StatusCodeResult(303);
         }
+
+        [HttpGet]
+        [Route("PaymentConfirmation")]
         public IActionResult PaymentConfirmation(int orderHeaderid)
         {
             OrderHeader orderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(x => x.Id == orderHeaderid);
@@ -192,6 +204,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         #region API CALLS
 
         [HttpGet]
+        [Route("GetAll")]
         public IActionResult GetAll(string status)
         {
             IEnumerable<OrderHeader> objOrderHeaders;
