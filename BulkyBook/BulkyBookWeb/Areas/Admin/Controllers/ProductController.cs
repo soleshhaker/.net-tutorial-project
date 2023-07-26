@@ -11,6 +11,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = SD.Role_Admin)]
+    [Route("[area]/[controller]")]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -21,12 +22,14 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
+        [HttpGet("Index")]
         public IActionResult Index()
         {
             IEnumerable<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category");
             return View(objProductList);
         }
 
+        [HttpGet("Upsert/{id?}")]
         public IActionResult Upsert(int? id)
         {
             ProductViewModel productView = new()
@@ -52,7 +55,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         }
 
         //POST
-        [HttpPost]
+        [HttpPost("Upsert")]
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(ProductViewModel productViewModel, List<IFormFile>? files)
         {
@@ -118,6 +121,8 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                 return View(productViewModel);
             }
         }
+
+        [HttpPost("DeleteImage")]
         public IActionResult DeleteImage(int imageId)
         {
             var imageToBeDeleted = _unitOfWork.ProductImage.GetFirstOrDefault(x => x.Id == imageId);
@@ -141,15 +146,15 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             }
             return RedirectToAction(nameof(Upsert), new { id = productId });
         }
-            #region API CALLS
+        #region API CALLS
 
-            [HttpGet]
+        [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
             IEnumerable<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category");
             return Json(new { data = objProductList });
         }
-        [HttpDelete]
+        [HttpDelete("Delete/{id?}")]
         public IActionResult Delete(int? id)
         {
             var productToBeDeleted = _unitOfWork.Product.GetFirstOrDefault(x => x.Id == id);

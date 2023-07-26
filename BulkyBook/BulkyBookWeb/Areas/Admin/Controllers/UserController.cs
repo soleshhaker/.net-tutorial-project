@@ -13,6 +13,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = SD.Role_Admin)]
+    [Route("[area]/[controller]")]
     public class UserController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -28,10 +29,14 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             _roleManager = roleManager;
         }
 
+        [HttpGet("Index")]
         public IActionResult Index() 
         {
             return View();
         }
+
+        [HttpGet]
+        [Route("Details")]
         public IActionResult Details(string id)
         {
             var userFromDb = _unitOfWork.ApplicationUser.GetFirstOrDefault(x => x.Id == id, includeProperties:"Company");
@@ -53,10 +58,12 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             UserViewModel.ApplicationUser.Role = _userManager.GetRolesAsync(_unitOfWork.ApplicationUser.GetFirstOrDefault(x => x.Id == id)).GetAwaiter().GetResult().FirstOrDefault();
             return View(UserViewModel);
         }
+
         [HttpPost]
-        public IActionResult Details()
+        [Route("Details_POST")]
+        public IActionResult Details_POST()
         {
-            var oldRole = UserViewModel.ApplicationUser.Role = _userManager
+            var oldRole = _userManager
                 .GetRolesAsync(_unitOfWork.ApplicationUser.GetFirstOrDefault(x => x.Id == UserViewModel.ApplicationUser.Id)).GetAwaiter().GetResult().FirstOrDefault();
 
             var applicationUserFromDb = _unitOfWork.ApplicationUser.GetFirstOrDefault(x => x.Id == UserViewModel.ApplicationUser.Id);
@@ -72,8 +79,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                 {
                     applicationUserFromDb.CompanyId = null;
                 }
-                _userManager.RemoveFromRoleAsync(applicationUserFromDb, oldRole).GetAwaiter().GetResult();
-                _userManager.AddToRoleAsync(applicationUserFromDb, UserViewModel.ApplicationUser.Role).GetAwaiter().GetResult();
+                _unitOfWork.ApplicationUser.UpdateRoles(applicationUserFromDb, UserViewModel.ApplicationUser.Role, oldRole);
             }
             else
             {
@@ -90,7 +96,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         }
         #region API CALLS
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
             IEnumerable<ApplicationUser> objUserList = _unitOfWork.ApplicationUser.GetAll(
@@ -109,7 +115,8 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 
             return Json(new { data = objUserList });
         }
-        [HttpPost]
+
+        [HttpPost("LockUnlock")]
         public IActionResult LockUnlock([FromBody] string? id)
         {
             var objFromDb = _unitOfWork.ApplicationUser.GetFirstOrDefault(x => x.Id == id);

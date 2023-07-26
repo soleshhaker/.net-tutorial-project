@@ -10,6 +10,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = SD.Role_Admin)]
+    [Route("[area]/[controller]")]
     public class CompanyController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -20,12 +21,14 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
+        [HttpGet("Index")]
         public IActionResult Index()
         {
             IEnumerable<Company> objCompanyList = _unitOfWork.Company.GetAll();
             return View(objCompanyList);
         }
 
+        [HttpGet("Upsert/{id?}")]
         public IActionResult Upsert(int? id)
         {
             if (id == null || id == 0)
@@ -43,7 +46,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         }
 
         //POST
-        [HttpPost]
+        [HttpPost("Upsert")]
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(Company obj, IFormFile? file)
         {
@@ -70,13 +73,13 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         }
         #region API CALLS
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public IActionResult GetAll()
         {
             IEnumerable<Company> objProductList = _unitOfWork.Company.GetAll();
             return Json(new { data = objProductList });
         }
-        [HttpDelete]
+        [HttpDelete("Delete")]
         public IActionResult Delete(int? id)
         {
             var companyToBeDeleted = _unitOfWork.Company.GetFirstOrDefault(x => x.Id == id);

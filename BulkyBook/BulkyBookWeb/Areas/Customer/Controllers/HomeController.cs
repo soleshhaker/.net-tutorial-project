@@ -21,11 +21,14 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        [HttpGet("")]
         public IActionResult Index()
         {
             IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category,ProductImages");
             return View(productList);
         }
+
+        [HttpGet("Details")]
         public IActionResult Details(int ProductId)
         {
             ShoppingCart shoppingCart = new()
@@ -36,7 +39,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             };
             return View(shoppingCart);
         }
-        [HttpPost]
+        [HttpPost("Details")]
         [Authorize]
         public IActionResult Details(ShoppingCart shoppingCart)
         {
@@ -66,12 +69,15 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet("Privacy")]
         public IActionResult Privacy()
         {
             return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [HttpGet("Error")]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

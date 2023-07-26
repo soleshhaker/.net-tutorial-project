@@ -10,6 +10,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = SD.Role_Admin)]
+    [Route("[area]/[controller]")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -18,6 +19,8 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        [HttpGet]
+        [Route("Index")]
         public IActionResult Index()
         {
             IEnumerable<Category> objCategoryList = _unitOfWork.Category.GetAll();
@@ -25,6 +28,8 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         }
 
         //GET
+        [HttpGet]
+        [Route("Create")]
         public IActionResult Create()
         {
             return View();
@@ -32,6 +37,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 
         //POST
         [HttpPost]
+        [Route("Create")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Category obj)
         {
@@ -47,6 +53,8 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
         //EDIT
+        [HttpGet]
+        [Route("Edit")]
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0) return NotFound();
@@ -59,6 +67,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 
         //EDIT
         [HttpPost]
+        [Route("Edit")]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Category obj)
         {
@@ -74,6 +83,8 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
         //DELETE
+        [HttpGet]
+        [Route("Delete")]
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0) return NotFound();
@@ -84,6 +95,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             return View(categoryFromDb);
         }
         [HttpPost, ActionName("Delete")]
+        [Route("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeletePOST(int? id)
         {
