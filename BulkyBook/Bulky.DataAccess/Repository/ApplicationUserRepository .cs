@@ -44,7 +44,6 @@ namespace Bulky.DataAccess.Repository
                     RoleId = _db.Roles.FirstOrDefault(r => r.Name == newRole)?.Id
                 });
             }
-
             // Save the changes to the context
             _db.SaveChanges();
         }
