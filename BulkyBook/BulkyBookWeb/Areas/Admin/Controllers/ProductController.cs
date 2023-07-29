@@ -149,6 +149,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         #region API CALLS
 
         [HttpGet("GetAll")]
+        [Produces("application/json")]
         public IActionResult GetAll()
         {
             IEnumerable<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category");

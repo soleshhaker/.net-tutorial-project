@@ -4850,7 +4850,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
-          "Microsoft.AspNetCore.Identity.UI": "7.0.8"
+          "Microsoft.AspNetCore.Identity.UI": "7.0.8",
+          "Swashbuckle.AspNetCore.SwaggerGen": "6.5.0"
         },
         "compile": {
           "bin/placeholder/Bulky.Utility.dll": {}

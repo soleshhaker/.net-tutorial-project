@@ -40,6 +40,10 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         public IActionResult Details(string id)
         {
             var userFromDb = _unitOfWork.ApplicationUser.GetFirstOrDefault(x => x.Id == id, includeProperties:"Company");
+            if(userFromDb == null)
+            {
+                return NotFound();
+            }
             var roles = _roleManager.Roles.ToList();
             UserViewModel = new()
             {
@@ -80,6 +84,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                     applicationUserFromDb.CompanyId = null;
                 }
                 _unitOfWork.ApplicationUser.UpdateRoles(applicationUserFromDb, UserViewModel.ApplicationUser.Role, oldRole);
+                applicationUserFromDb.Role = UserViewModel.ApplicationUser.Role;
             }
             else
             {
