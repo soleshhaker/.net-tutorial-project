@@ -28,5 +28,8 @@
   <ItemGroup>
     <Folder Include="wwwroot\images\product\" />
   </ItemGroup>
+	<ItemGroup>
+		<InternalsVisibleTo Include="BulkyBookWeb.Tests" />
+	</ItemGroup>
 
 </Project>

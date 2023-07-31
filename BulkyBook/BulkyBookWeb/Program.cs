@@ -88,12 +88,12 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 app.Run();
-
 void SeedDatabase()
 {
     using (var scope = app.Services.CreateScope())
     {
-       var dbInitializer = scope.ServiceProvider.GetRequiredService<IDBInitializer>();
+        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDBInitializer>();
         dbInitializer.Initialize();
     }
 }
+public partial class Program { }
