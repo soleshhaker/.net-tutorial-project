@@ -41,7 +41,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error when an exception occurs during the index page access
-                Log.Error(ex, "An error occurred while accessing the order index page at {Timestamp}", DateTime.Now);
+                Log.Error(ex, "An error occurred while accessing the order index page at {Timestamp}. Error message: {ErrorMessage}", DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while accessing the order index page. Please try again later.";
                 return RedirectToAction(nameof(Index));
@@ -70,7 +70,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error when an exception occurs during the order details page access
-                Log.Error(ex, "An error occurred while accessing the order details page for Order ID {OrderId} at {Timestamp}", orderId, DateTime.Now);
+                Log.Error(ex, "An error occurred while accessing the order details page for Order ID {OrderId} at {Timestamp}. Error message: {ErrorMessage}", orderId, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while accessing the order details page. Please try again later.";
                 return RedirectToAction(nameof(Index));
@@ -111,7 +111,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error when an exception occurs during order details update
-                Log.Error(ex, "An error occurred while updating order details for Order ID {OrderId} at {Timestamp}", OrderViewModel.OrderHeader.Id, DateTime.Now);
+                Log.Error(ex, "An error occurred while updating order details for Order ID {OrderId} at {Timestamp}. Error message: {ErrorMessage}", OrderViewModel.OrderHeader.Id, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while updating order details. Please try again later.";
                 return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.OrderHeader.Id });
@@ -137,7 +137,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error when an exception occurs during order processing start
-                Log.Error(ex, "An error occurred while starting order processing for Order ID {OrderId} at {Timestamp}", OrderViewModel.OrderHeader.Id, DateTime.Now);
+                Log.Error(ex, "An error occurred while starting order processing for Order ID {OrderId} at {Timestamp}. Error message: {ErrorMessage}", OrderViewModel.OrderHeader.Id, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while starting order processing. Please try again later.";
                 return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.OrderHeader.Id });
@@ -173,7 +173,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error when an exception occurs during order shipment
-                Log.Error(ex, "An error occurred while shipping order {OrderId} at {Timestamp}", OrderViewModel.OrderHeader.Id, DateTime.Now);
+                Log.Error(ex, "An error occurred while shipping order {OrderId} at {Timestamp}. Error message: {ErrorMessage}", OrderViewModel.OrderHeader.Id, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while shipping the order. Please try again later.";
                 return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.OrderHeader.Id });
@@ -217,7 +217,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error when an exception occurs during order cancellation
-                Log.Error(ex, "An error occurred while canceling order {OrderId} at {Timestamp}", OrderViewModel.OrderHeader.Id, DateTime.Now);
+                Log.Error(ex, "An error occurred while canceling order {OrderId} at {Timestamp}. Error message: {ErrorMessage}", OrderViewModel.OrderHeader.Id, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while canceling the order. Please try again later.";
                 return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.OrderHeader.Id });
@@ -275,7 +275,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error when an exception occurs during payment process
-                Log.Error(ex, "An error occurred while processing the payment for order {OrderId} at {Timestamp}", OrderViewModel.OrderHeader.Id, DateTime.Now);
+                Log.Error(ex, "An error occurred while processing the payment for order {OrderId} at {Timestamp}. Error message: {ErrorMessage}", OrderViewModel.OrderHeader.Id, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while processing the payment. Please try again later.";
                 return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.OrderHeader.Id });
@@ -311,7 +311,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error when an exception occurs during payment confirmation
-                Log.Error(ex, "An error occurred while confirming payment for order {OrderId} at {Timestamp}", orderHeaderid, DateTime.Now);
+                Log.Error(ex, "An error occurred while confirming payment for order {OrderId} at {Timestamp}. Error message: {ErrorMessage}", orderHeaderid, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while confirming the payment. Please try again later.";
                 return RedirectToAction(nameof(Details), new { orderId = orderHeaderid });
@@ -365,7 +365,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error when an exception occurs during order retrieval
-                Log.Error(ex, "An error occurred while retrieving orders with status '{OrderStatus}' at {Timestamp}", status, DateTime.Now);
+                Log.Error(ex, "An error occurred while retrieving orders with status '{OrderStatus}' at {Timestamp}. Error message: {ErrorMessage}", status, DateTime.Now, ex.Message);
 
                 return StatusCode(500, "An error occurred while retrieving orders.");
             }

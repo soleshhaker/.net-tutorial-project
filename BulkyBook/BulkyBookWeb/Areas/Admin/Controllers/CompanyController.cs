@@ -41,7 +41,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error
-                Log.Error(ex, "An error occurred while processing the company index page at {Timestamp}", DateTime.Now);
+                Log.Error(ex, "An error occurred while processing the company index page at {Timestamp}. Error message: {ErrorMessage}", DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while processing the company index page. Please try again later.";
                 return RedirectToAction(nameof(Index));
@@ -75,7 +75,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error along with the company ID
-                Log.Error(ex, "An error occurred while accessing the company page for company ID {CompanyId} at {Timestamp}", id, DateTime.Now);
+                Log.Error(ex, "An error occurred while accessing the company page for company ID {CompanyId} at {Timestamp}. Error message: {ErrorMessage}", id, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while accessing the company page. Please try again later.";
                 return RedirectToAction(nameof(Index));
@@ -114,7 +114,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error along with the company ID
-                Log.Error(ex, "An error occurred while {Action} the company with ID {CompanyId} at {Timestamp}", (obj.Id == 0 ? "creating" : "updating"), obj.Id, DateTime.Now);
+                Log.Error(ex, "An error occurred while {Action} the company with ID {CompanyId} at {Timestamp}. Error message: {ErrorMessage}", (obj.Id == 0 ? "creating" : "updating"), obj.Id, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while creating/updating the company. Please try again later.";
                 return RedirectToAction(nameof(Index));
@@ -138,7 +138,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error
-                Log.Error(ex, "An error occurred in the company API call at {Timestamp}", DateTime.Now);
+                Log.Error(ex, "An error occurred in the company API call at {Timestamp}. Error message: {ErrorMessage}", DateTime.Now, ex.Message);
 
                 return Json(new { error = "An error occurred while fetching companies. Please try again later." });
             }
@@ -168,7 +168,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error when an exception occurs during deletion
-                Log.Error(ex, "An error occurred while deleting the company with ID {CompanyId} at {Timestamp}", id, DateTime.Now);
+                Log.Error(ex, "An error occurred while deleting the company with ID {CompanyId} at {Timestamp}. Error message: {ErrorMessage}", id, DateTime.Now, ex.Message);
 
                 return Json(new { success = false, message = "An error occurred while deleting the company. Please try again later." });
             }

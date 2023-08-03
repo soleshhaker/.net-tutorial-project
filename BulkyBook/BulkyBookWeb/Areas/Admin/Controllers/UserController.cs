@@ -43,7 +43,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error
-                Log.Error(ex, "An error occurred while processing the UserController Index method for User {UserName} at {Timestamp}", User.Identity.Name, DateTime.Now);
+                Log.Error(ex, "An error occurred while processing the UserController Index method for User {UserName} at {Timestamp}. Error message: {ErrorMessage}", User.Identity.Name, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while processing the UserController Index method. Please try again later.";
                 return RedirectToAction(nameof(Index));
@@ -87,7 +87,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error
-                Log.Error(ex, "An error occurred while processing the UserController Details method for User {UserName} at {Timestamp}", User.Identity.Name, DateTime.Now);
+                Log.Error(ex, "An error occurred while processing the UserController Details method for User {UserName} at {Timestamp}. Error message: {ErrorMessage}", User.Identity.Name, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while processing the UserController Details method. Please try again later.";
                 return RedirectToAction(nameof(Index));
@@ -138,8 +138,8 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error
-                Log.Error(ex, "An error occurred while updating user {UserId} at {Timestamp}. Details: {UserDetails}",
-                    User.Identity.Name, DateTime.Now, GetUserDetails(applicationUserFromDb));
+                Log.Error(ex, "An error occurred while updating user {UserId} at {Timestamp}. Details: {UserDetails}. Error message: {ErrorMessage}",
+                    User.Identity.Name, DateTime.Now, GetUserDetails(applicationUserFromDb), ex.Message);
 
                 TempData["error"] = "An error occurred while updating user. Please try again later.";
                 return RedirectToAction("Index");
@@ -192,7 +192,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the exception
-                Log.Error(ex, "Error occurred while fetching users from the database");
+                Log.Error(ex, "Error occurred while fetching users from the database. Error message: {ErrorMessage}", ex.Message);
                 return BadRequest();
             }
         }
@@ -230,7 +230,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the exception
-                Log.Error(ex, "Error occurred while Locking/Unlocking user with ID {UserId}", id);
+                Log.Error(ex, "Error occurred while Locking/Unlocking user with ID {UserId}. Error message: {ErrorMessage}", id, ex.Message);
                 return BadRequest();
             }
         }

@@ -39,7 +39,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error if an exception occurs
-                Log.Error(ex, "An error occurred while processing the Index page at {Timestamp}", DateTime.Now);
+                Log.Error(ex, "An error occurred while processing the Index page at {Timestamp}. Error message: {ErrorMessage}", DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while processing the Index page. Please try again later.";
                 return RedirectToAction(nameof(Index));
@@ -82,7 +82,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error if an exception occurs
-                Log.Error(ex, "An error occurred while processing the Upsert page at {Timestamp}", DateTime.Now);
+                Log.Error(ex, "An error occurred while processing the Upsert page at {Timestamp}. Error message: {ErrorMessage}", DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while processing the Upsert page. Please try again later.";
                 return RedirectToAction(nameof(Index));
@@ -168,7 +168,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error if an exception occurs
-                Log.Error(ex, "An error occurred while processing the Upsert page at {Timestamp}", DateTime.Now);
+                Log.Error(ex, "An error occurred while processing the Upsert page at {Timestamp}. Error message: {ErrorMessage}", DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while processing the Upsert page. Please try again later.";
                 return RedirectToAction(nameof(Index));
@@ -211,7 +211,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error if an exception occurs
-                Log.Error(ex, "An error occurred while deleting the image with ID {ImageId} at {Timestamp}", imageId, DateTime.Now);
+                Log.Error(ex, "An error occurred while deleting the image with ID {ImageId} at {Timestamp}. Error message: {ErrorMessage}", imageId, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while deleting the image. Please try again later.";
                 return RedirectToAction(nameof(Upsert), new { id = imageToBeDeleted?.ProductId });
@@ -236,7 +236,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error if an exception occurs
-                Log.Error(ex, "An error occurred while retrieving all products at {Timestamp}", DateTime.Now);
+                Log.Error(ex, "An error occurred while retrieving all products at {Timestamp}. Error message: {ErrorMessage}", DateTime.Now, ex.Message);
 
                 return Json(new { data = new List<Product>() });
             }
@@ -277,7 +277,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error if an exception occurs
-                Log.Error(ex, "An error occurred while deleting the product with ID {ProductId} at {Timestamp}", id, DateTime.Now);
+                Log.Error(ex, "An error occurred while deleting the product with ID {ProductId} at {Timestamp}. Error message: {ErrorMessage}", id, DateTime.Now, ex.Message);
 
                 return Json(new { success = false, message = "An error occurred while deleting the product. Please try again later." });
             }

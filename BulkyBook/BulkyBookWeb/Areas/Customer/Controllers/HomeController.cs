@@ -101,7 +101,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             catch (Exception ex)
             {
                 // Log the error
-                Log.Error(ex, "An error occurred while processing the cart operation for User {UserId} at {Timestamp}", userId, DateTime.Now);
+                Log.Error(ex, "An error occurred while processing the cart operation for User {UserId} at {Timestamp}. Error message: {ErrorMessage}", userId, DateTime.Now, ex.Message);
 
                 // Optionally, you can handle the error in a meaningful way, like showing a user-friendly error message or redirecting to an error page.
                 TempData["error"] = "An error occurred while processing your cart. Please try again later.";

@@ -60,7 +60,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             catch (Exception ex)
             {
                 // Log the error
-                Log.Error(ex, "An error occurred while processing the cart index page for User {UserId} at {Timestamp}", userId, DateTime.Now);
+                Log.Error(ex, "An error occurred while processing the cart index page for User {UserId} at {Timestamp}. Error message: {ErrorMessage}", userId, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while processing the cart index page. Please try again later.";
                 return RedirectToAction(nameof(Index));
@@ -108,7 +108,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             catch (Exception ex)
             {
                 // Log the error
-                Log.Error(ex, "An error occurred while processing the cart summary page for User {UserId} at {Timestamp}", userId, DateTime.Now);
+                Log.Error(ex, "An error occurred while processing the cart summary page for User {UserId} at {Timestamp}. Error message: {ErrorMessage}", userId, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while processing the cart summary page. Please try again later.";
                 return RedirectToAction(nameof(Index));
@@ -253,7 +253,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             catch (Exception ex)
             {
                 // Log the error along with the order ID
-                Log.Error(ex, "An error occurred while processing the order confirmation for Order ID {OrderId} at {Timestamp}", id, DateTime.Now);
+                Log.Error(ex, "An error occurred while processing the order confirmation for Order ID {OrderId} at {Timestamp}. Error message: {ErrorMessage}", id, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while processing the order confirmation. Please try again later.";
                 return RedirectToAction(nameof(Index));
@@ -279,7 +279,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             catch (Exception ex)
             {
                 // Log the error along with the cart ID
-                Log.Error(ex, "An error occurred while updating the cart item with ID {CartId} by 1 at {Timestamp}", cartId, DateTime.Now);
+                Log.Error(ex, "An error occurred while updating the cart item with ID {CartId} by 1 at {Timestamp}. Error message: {ErrorMessage}", cartId, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while updating the cart item. Please try again later.";
                 return RedirectToAction(nameof(Index));
@@ -313,7 +313,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             catch (Exception ex)
             {
                 // Log the error along with the cart ID
-                Log.Error(ex, "An error occurred while updating the cart item with ID {CartId} by -1 at {Timestamp}", cartId, DateTime.Now);
+                Log.Error(ex, "An error occurred while updating the cart item with ID {CartId} by -1 at {Timestamp}. Error message: {ErrorMessage}", cartId, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while updating the cart item. Please try again later.";
                 return RedirectToAction(nameof(Index));
@@ -339,7 +339,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             catch (Exception ex)
             {
                 // Log the error along with the cart ID
-                Log.Error(ex, "An error occurred while removing the cart item with ID {CartId} at {Timestamp}", cartId, DateTime.Now);
+                Log.Error(ex, "An error occurred while removing the cart item with ID {CartId} at {Timestamp}. Error message: {ErrorMessage}", cartId, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while removing the cart item. Please try again later.";
                 return RedirectToAction(nameof(Index));
@@ -369,7 +369,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             catch (Exception ex)
             {
                 // Log the error along with the cart item ID and count
-                Log.Error(ex, "An error occurred while calculating the price for cart item with ID {CartItemId} and count {CartItemCount} at {Timestamp}", shoppingCart.Id, shoppingCart.Count, DateTime.Now);
+                Log.Error(ex, "An error occurred while calculating the price for cart item with ID {CartItemId} and count {CartItemCount} at {Timestamp}. Error message: {ErrorMessage}", shoppingCart.Id, shoppingCart.Count, DateTime.Now, ex.Message);
 
                 return shoppingCart.Product.Price;
             }

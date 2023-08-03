@@ -40,7 +40,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error
-                Log.Error(ex, "An error occurred while processing the category index page at {Timestamp}", DateTime.Now);
+                Log.Error(ex, "An error occurred while processing the category index page at {Timestamp}. Error message: {ErrorMessage}", DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while processing the category index page. Please try again later.";
                 return RedirectToAction(nameof(Index));
@@ -62,7 +62,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error
-                Log.Error(ex, "An error occurred while processing the category creation page at {Timestamp}", DateTime.Now);
+                Log.Error(ex, "An error occurred while processing the category creation page at {Timestamp}. Error message: {ErrorMessage}", DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while processing the category creation page. Please try again later.";
                 return RedirectToAction(nameof(Index));
@@ -95,7 +95,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error
-                Log.Error(ex, "An error occurred while creating a new category at {Timestamp}", DateTime.Now);
+                Log.Error(ex, "An error occurred while creating a new category at {Timestamp}. Error message: {ErrorMessage}", DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while creating the category. Please try again later.";
                 return RedirectToAction(nameof(Index));
@@ -122,7 +122,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error along with the category ID
-                Log.Error(ex, "An error occurred while accessing the category edit page for category ID {CategoryId} at {Timestamp}", id, DateTime.Now);
+                Log.Error(ex, "An error occurred while accessing the category edit page for category ID {CategoryId} at {Timestamp}. Error message: {ErrorMessage}", id, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while accessing the category edit page. Please try again later.";
                 return RedirectToAction(nameof(Index));
@@ -156,7 +156,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error
-                Log.Error(ex, "An error occurred while editing the category with ID {CategoryId} at {Timestamp}", obj.Id, DateTime.Now);
+                Log.Error(ex, "An error occurred while editing the category with ID {CategoryId} at {Timestamp}. Error message: {ErrorMessage}", obj.Id, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while editing the category. Please try again later.";
                 return RedirectToAction(nameof(Index));
@@ -183,7 +183,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error along with the category ID
-                Log.Error(ex, "An error occurred while accessing the category delete page for category ID {CategoryId} at {Timestamp}", id, DateTime.Now);
+                Log.Error(ex, "An error occurred while accessing the category delete page for category ID {CategoryId} at {Timestamp}. Error message: {ErrorMessage}", id, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while accessing the category delete page. Please try again later.";
                 return RedirectToAction(nameof(Index));
@@ -212,7 +212,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error along with the category ID
-                Log.Error(ex, "An error occurred while deleting the category with ID {CategoryId} at {Timestamp}", id, DateTime.Now);
+                Log.Error(ex, "An error occurred while deleting the category with ID {CategoryId} at {Timestamp}. Error message: {ErrorMessage}", id, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while deleting the category. Please try again later.";
                 return RedirectToAction(nameof(Index));
