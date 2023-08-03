@@ -4,6 +4,7 @@ using Bulky.Models.ViewModels;
 using Bulky.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using Stripe.Checkout;
 using System.Security.Claims;
 
@@ -26,54 +27,95 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
         [HttpGet("Index")]
         public IActionResult Index()
         {
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            string userId = null;
 
-            ShoppingCartViewModel = new()
+            try
             {
-                ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == userId, includeProperties: "Product"),
-                OrderHeader = new()
-            };
+                var claimsIdentity = (ClaimsIdentity)User.Identity;
+                userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            IEnumerable<ProductImage> productImages = _unitOfWork.ProductImage.GetAll();
+                // Log user identification
+                Log.Information("User {UserId} accessed the cart index page at {Timestamp}", userId, DateTime.Now);
 
-            foreach (var cart in ShoppingCartViewModel.ShoppingCartList)
-            {
-                cart.Product.ProductImages = productImages.Where(x => x.ProductId == cart.Product.Id).ToList();
-                cart.Price = GetPriceBasedOnQuantity(cart);
-                ShoppingCartViewModel.OrderHeader.OrderTotal += (cart.Price * cart.Count);
+                ShoppingCartViewModel = new()
+                {
+                    ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == userId, includeProperties: "Product"),
+                    OrderHeader = new()
+                };
+
+                IEnumerable<ProductImage> productImages = _unitOfWork.ProductImage.GetAll();
+
+                foreach (var cart in ShoppingCartViewModel.ShoppingCartList)
+                {
+                    cart.Product.ProductImages = productImages.Where(x => x.ProductId == cart.Product.Id).ToList();
+                    cart.Price = GetPriceBasedOnQuantity(cart);
+                    ShoppingCartViewModel.OrderHeader.OrderTotal += (cart.Price * cart.Count);
+                }
+
+                // Log the total number of items in the cart
+                Log.Information("User {UserId} has {CartItemCount} item(s) in the cart at {Timestamp}", userId, ShoppingCartViewModel.ShoppingCartList.Count(), DateTime.Now);
+
+                return View(ShoppingCartViewModel);
             }
+            catch (Exception ex)
+            {
+                // Log the error
+                Log.Error(ex, "An error occurred while processing the cart index page for User {UserId} at {Timestamp}", userId, DateTime.Now);
 
-            return View(ShoppingCartViewModel);
+                TempData["error"] = "An error occurred while processing the cart index page. Please try again later.";
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         [HttpGet("Summary")]
         public IActionResult Summary()
         {
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+            string userId = null;
 
-            ShoppingCartViewModel = new()
+            try
             {
-                ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == userId, includeProperties: "Product"),
-                OrderHeader = new()
-            };
-            ShoppingCartViewModel.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(x => x.Id == userId);
+                var claimsIdentity = (ClaimsIdentity)User.Identity;
+                userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            ShoppingCartViewModel.OrderHeader.Name = ShoppingCartViewModel.OrderHeader.ApplicationUser.Name;
-            ShoppingCartViewModel.OrderHeader.PhoneNumber = ShoppingCartViewModel.OrderHeader.ApplicationUser.PhoneNumber;
-            ShoppingCartViewModel.OrderHeader.StreetAddress = ShoppingCartViewModel.OrderHeader.ApplicationUser.StreetAddress;
-            ShoppingCartViewModel.OrderHeader.City = ShoppingCartViewModel.OrderHeader.ApplicationUser.City;
-            ShoppingCartViewModel.OrderHeader.State = ShoppingCartViewModel.OrderHeader.ApplicationUser.State;
-            ShoppingCartViewModel.OrderHeader.PostalCode = ShoppingCartViewModel.OrderHeader.ApplicationUser.PostalCode;
+                // Log user identification
+                Log.Information("User {UserId} accessed the cart summary page at {Timestamp}", userId, DateTime.Now);
 
-            foreach (var cart in ShoppingCartViewModel.ShoppingCartList)
-            {
-                cart.Price = GetPriceBasedOnQuantity(cart);
-                ShoppingCartViewModel.OrderHeader.OrderTotal += (cart.Price * cart.Count);
+                ShoppingCartViewModel = new()
+                {
+                    ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == userId, includeProperties: "Product"),
+                    OrderHeader = new()
+                };
+                ShoppingCartViewModel.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(x => x.Id == userId);
+
+                ShoppingCartViewModel.OrderHeader.Name = ShoppingCartViewModel.OrderHeader.ApplicationUser.Name;
+                ShoppingCartViewModel.OrderHeader.PhoneNumber = ShoppingCartViewModel.OrderHeader.ApplicationUser.PhoneNumber;
+                ShoppingCartViewModel.OrderHeader.StreetAddress = ShoppingCartViewModel.OrderHeader.ApplicationUser.StreetAddress;
+                ShoppingCartViewModel.OrderHeader.City = ShoppingCartViewModel.OrderHeader.ApplicationUser.City;
+                ShoppingCartViewModel.OrderHeader.State = ShoppingCartViewModel.OrderHeader.ApplicationUser.State;
+                ShoppingCartViewModel.OrderHeader.PostalCode = ShoppingCartViewModel.OrderHeader.ApplicationUser.PostalCode;
+
+                foreach (var cart in ShoppingCartViewModel.ShoppingCartList)
+                {
+                    cart.Price = GetPriceBasedOnQuantity(cart);
+                    ShoppingCartViewModel.OrderHeader.OrderTotal += (cart.Price * cart.Count);
+                }
+
+                // Log the total number of items in the cart
+                Log.Information("User {UserId} has {CartItemCount} item(s) in the cart at {Timestamp}", userId, ShoppingCartViewModel.ShoppingCartList.Count(), DateTime.Now);
+
+                return View(ShoppingCartViewModel);
             }
-            return View(ShoppingCartViewModel);
+            catch (Exception ex)
+            {
+                // Log the error
+                Log.Error(ex, "An error occurred while processing the cart summary page for User {UserId} at {Timestamp}", userId, DateTime.Now);
+
+                TempData["error"] = "An error occurred while processing the cart summary page. Please try again later.";
+                return RedirectToAction(nameof(Index));
+            }
         }
+
+
         [HttpPost("SummaryPOST")]
         [ActionName("SummaryPOST")]
         public IActionResult SummaryPOST()
@@ -106,6 +148,14 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
                 ShoppingCartViewModel.OrderHeader.PaymentStatus = SD.PaymentStatusDelayedPayment;
                 ShoppingCartViewModel.OrderHeader.OrderStatus = SD.StatusApproved;
             }
+
+            // Log order details before adding to the database
+            Log.Information("Order details before saving: {OrderHeader}", ShoppingCartViewModel.OrderHeader);
+            foreach (var cart in ShoppingCartViewModel.ShoppingCartList)
+            {
+                Log.Information("Order detail for ProductId {ProductId}: Price: {Price}, Quantity: {Quantity}", cart.ProductId, cart.Price, cart.Count);
+            }
+
             _unitOfWork.OrderHeader.Add(ShoppingCartViewModel.OrderHeader);
             _unitOfWork.Save();
             foreach (var cart in ShoppingCartViewModel.ShoppingCartList)
@@ -129,13 +179,13 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
                 var options = new SessionCreateOptions
                 {
 
-                    SuccessUrl = domain+$"customer/cart/OrderConfirmation?id={ShoppingCartViewModel.OrderHeader.Id}",
-                    CancelUrl = domain+"customer/cart/index",
+                    SuccessUrl = domain + $"customer/cart/OrderConfirmation?id={ShoppingCartViewModel.OrderHeader.Id}",
+                    CancelUrl = domain + "customer/cart/index",
                     LineItems = new List<SessionLineItemOptions>(),
                     Mode = "payment",
                 };
 
-                foreach(var item in ShoppingCartViewModel.ShoppingCartList)
+                foreach (var item in ShoppingCartViewModel.ShoppingCartList)
                 {
                     var sessionLineItem = new SessionLineItemOptions
                     {
@@ -167,88 +217,163 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
         [HttpGet("OrderConfirmation")]
         public IActionResult OrderConfirmation(int id)
         {
-            OrderHeader orderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(x => x.Id == id, includeProperties: "ApplicationUser");
-            if(orderHeader.PaymentStatus != SD.PaymentStatusDelayedPayment)
+            try
             {
-                //order by customer
-                var service = new SessionService();
-                Session session = service.Get(orderHeader.SessionId);
+                // Log the order confirmation request with the order ID
+                Log.Information("Order confirmation request received for Order ID {OrderId} at {Timestamp}", id, DateTime.Now);
 
-                if(session.PaymentStatus.ToLower() == "paid")
+                OrderHeader orderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(x => x.Id == id, includeProperties: "ApplicationUser");
+                if (orderHeader.PaymentStatus != SD.PaymentStatusDelayedPayment)
                 {
-                    _unitOfWork.OrderHeader.UpdateStripePaymentId(id, session.Id, session.PaymentIntentId);
-                    _unitOfWork.OrderHeader.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
-                    _unitOfWork.Save();
+                    //order by customer
+                    var service = new SessionService();
+                    Session session = service.Get(orderHeader.SessionId);
+
+                    if (session.PaymentStatus.ToLower() == "paid")
+                    {
+                        _unitOfWork.OrderHeader.UpdateStripePaymentId(id, session.Id, session.PaymentIntentId);
+                        _unitOfWork.OrderHeader.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
+                        _unitOfWork.Save();
+                    }
+                    HttpContext.Session.Clear();
                 }
-                HttpContext.Session.Clear();
+
+                List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCart
+                    .GetAll(x => x.ApplicationUserId == orderHeader.ApplicationUserId)
+                    .ToList();
+
+                _unitOfWork.ShoppingCart.RemoveRange(shoppingCarts);
+                _unitOfWork.Save();
+
+                // Log the successful completion of the order confirmation
+                Log.Information("Order confirmation completed for Order ID {OrderId} at {Timestamp}", id, DateTime.Now);
+
+                return View(id);
             }
+            catch (Exception ex)
+            {
+                // Log the error along with the order ID
+                Log.Error(ex, "An error occurred while processing the order confirmation for Order ID {OrderId} at {Timestamp}", id, DateTime.Now);
 
-            List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCart.
-                GetAll(x=>x.ApplicationUserId == orderHeader.ApplicationUserId)
-                .ToList();
-
-            _unitOfWork.ShoppingCart.RemoveRange(shoppingCarts);
-            _unitOfWork.Save();
-
-            return View(id);
+                TempData["error"] = "An error occurred while processing the order confirmation. Please try again later.";
+                return RedirectToAction(nameof(Index));
+            }
         }
+
 
         [HttpPost("Plus")]
         public IActionResult Plus(int cartId)
         {
-            var cartFromDb = _unitOfWork.ShoppingCart.GetFirstOrDefault(x => x.Id == cartId);
-            cartFromDb.Count += 1;
-            _unitOfWork.ShoppingCart.Update(cartFromDb);
-            _unitOfWork.Save();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                var cartFromDb = _unitOfWork.ShoppingCart.GetFirstOrDefault(x => x.Id == cartId);
+                cartFromDb.Count += 1;
+                _unitOfWork.ShoppingCart.Update(cartFromDb);
+                _unitOfWork.Save();
+
+                // Log the cart item count update
+                Log.Information("Cart item with ID {CartId} increased by 1 at {Timestamp}", cartId, DateTime.Now);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                // Log the error along with the cart ID
+                Log.Error(ex, "An error occurred while updating the cart item with ID {CartId} by 1 at {Timestamp}", cartId, DateTime.Now);
+
+                TempData["error"] = "An error occurred while updating the cart item. Please try again later.";
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         [HttpPost("Minus")]
         public IActionResult Minus(int cartId)
         {
-            var cartFromDb = _unitOfWork.ShoppingCart.GetFirstOrDefault(x => x.Id == cartId);
-            if (cartFromDb.Count <= 1)
+            try
             {
-                //remove
-                _unitOfWork.ShoppingCart.Remove(cartFromDb);
-                HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
+                var cartFromDb = _unitOfWork.ShoppingCart.GetFirstOrDefault(x => x.Id == cartId);
+                if (cartFromDb.Count <= 1)
+                {
+                    //remove
+                    _unitOfWork.ShoppingCart.Remove(cartFromDb);
+                    HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
+                }
+                else
+                {
+                    cartFromDb.Count -= 1;
+                    _unitOfWork.ShoppingCart.Update(cartFromDb);
+                }
+                _unitOfWork.Save();
+
+                // Log the cart item count update
+                Log.Information("Cart item with ID {CartId} decreased by 1 at {Timestamp}", cartId, DateTime.Now);
+
+                return RedirectToAction(nameof(Index));
             }
-            else
+            catch (Exception ex)
             {
-                cartFromDb.Count -= 1;
-                _unitOfWork.ShoppingCart.Update(cartFromDb);
+                // Log the error along with the cart ID
+                Log.Error(ex, "An error occurred while updating the cart item with ID {CartId} by -1 at {Timestamp}", cartId, DateTime.Now);
+
+                TempData["error"] = "An error occurred while updating the cart item. Please try again later.";
+                return RedirectToAction(nameof(Index));
             }
-            _unitOfWork.Save();
-            return RedirectToAction(nameof(Index));
         }
+
 
         [HttpPost("Remove")]
         public IActionResult Remove(int cartId)
         {
-            var cartFromDb = _unitOfWork.ShoppingCart.GetFirstOrDefault(x => x.Id == cartId);
-            _unitOfWork.ShoppingCart.Remove(cartFromDb);
-            HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
-            _unitOfWork.Save();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                var cartFromDb = _unitOfWork.ShoppingCart.GetFirstOrDefault(x => x.Id == cartId);
+                _unitOfWork.ShoppingCart.Remove(cartFromDb);
+                HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
+                _unitOfWork.Save();
+
+                // Log the removal of a cart item
+                Log.Information("Cart item with ID {CartId} removed from the cart at {Timestamp}", cartId, DateTime.Now);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                // Log the error along with the cart ID
+                Log.Error(ex, "An error occurred while removing the cart item with ID {CartId} at {Timestamp}", cartId, DateTime.Now);
+
+                TempData["error"] = "An error occurred while removing the cart item. Please try again later.";
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         private double GetPriceBasedOnQuantity(ShoppingCart shoppingCart)
         {
-            if (shoppingCart.Count <= 50)
+            try
             {
-                return shoppingCart.Product.Price;
-            }
-            else
-            {
-                if (shoppingCart.Count <= 1000)
+                if (shoppingCart.Count <= 50)
                 {
-                    return shoppingCart.Product.Price50;
+                    return shoppingCart.Product.Price;
                 }
                 else
                 {
-                    return shoppingCart.Product.Price100;
+                    if (shoppingCart.Count <= 1000)
+                    {
+                        return shoppingCart.Product.Price50;
+                    }
+                    else
+                    {
+                        return shoppingCart.Product.Price100;
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                // Log the error along with the cart item ID and count
+                Log.Error(ex, "An error occurred while calculating the price for cart item with ID {CartItemId} and count {CartItemCount} at {Timestamp}", shoppingCart.Id, shoppingCart.Count, DateTime.Now);
+
+                return shoppingCart.Product.Price;
+            }
         }
+
     }
 }
