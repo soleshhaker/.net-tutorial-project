@@ -63,7 +63,6 @@ namespace Bulky.DataAccess.Repository
                 }
             }
             return query.FirstOrDefault();
-
         }
 
         public void Remove(T entity)

@@ -10,10 +10,22 @@ using Bulky.DataAccess.DBInitializer;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateLogger();
+
+Log.Information("Starting web application");
+builder.Host.UseSerilog();
+builder.Services.AddLogging(loggingBuilder =>
+{
+    loggingBuilder.ClearProviders();
+    loggingBuilder.AddSerilog(dispose: true);
+});
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(
@@ -67,7 +79,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 app.UseStatusCodePagesWithReExecute("/Home/Error", "?statusCode={0}");
-
+app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();

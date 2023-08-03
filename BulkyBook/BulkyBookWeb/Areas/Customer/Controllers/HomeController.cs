@@ -4,6 +4,7 @@ using Bulky.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using System.Diagnostics;
 using System.Security.Claims;
 
@@ -25,49 +26,87 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
         public IActionResult Index()
         {
             IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category,ProductImages");
+            int productCount = productList.Count(); // Get the number of products returned
+            Log.Information("Returned {ProductCount} product(s) at {Timestamp}", productCount, DateTime.Now);
             return View(productList);
         }
 
         [HttpGet("Details")]
         public IActionResult Details(int ProductId)
         {
-            ShoppingCart shoppingCart = new()
+            var product = _unitOfWork.Product.GetFirstOrDefault(
+                x => x.Id == ProductId,
+                includeProperties: "Category,ProductImages");
+
+            if (product == null)
             {
-                Product = _unitOfWork.Product.GetFirstOrDefault(x => x.Id == ProductId, includeProperties: "Category,ProductImages"),
+                Log.Information("Product of ID {ProductId} not found at {Timestamp}", ProductId, DateTime.Now);
+                return NotFound();
+            }
+
+            var shoppingCart = new ShoppingCart
+            {
+                Product = product,
                 Count = 1,
                 ProductId = ProductId
             };
+
             return View(shoppingCart);
         }
         [HttpPost("Details")]
         [Authorize]
         public IActionResult Details(ShoppingCart shoppingCart)
         {
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
-            shoppingCart.ApplicationUserId = userId;
-
-            ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.GetFirstOrDefault(x => x.ApplicationUserId == userId &&
-            x.ProductId == shoppingCart.ProductId);
-            if (cartFromDb != null)
+            string userId = null;
+            try
             {
-                //cart exists
-                cartFromDb.Count += shoppingCart.Count;
-                _unitOfWork.ShoppingCart.Update(cartFromDb);
-                _unitOfWork.Save();
-                HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == userId).Count());
+                var claimsIdentity = (ClaimsIdentity)User.Identity;
+                userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+                shoppingCart.ApplicationUserId = userId;
 
+                // Log user identification
+                Log.Information("User {UserId} is performing a cart operation at {Timestamp}", userId, DateTime.Now);
+
+                ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.GetFirstOrDefault(x => x.ApplicationUserId == userId && x.ProductId == shoppingCart.ProductId);
+                if (cartFromDb != null)
+                {
+                    //cart exists
+                    cartFromDb.Count += shoppingCart.Count;
+                    _unitOfWork.ShoppingCart.Update(cartFromDb);
+                    _unitOfWork.Save();
+
+                    // Log cart update information
+                    Log.Information("Cart updated for User {UserId}. ProductId: {ProductId}, Quantity Added: {QuantityAdded} at {Timestamp}",
+                                    userId, shoppingCart.ProductId, shoppingCart.Count, DateTime.Now);
+
+                    HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == userId).Count());
+                }
+                else
+                {
+                    //add cart
+                    _unitOfWork.ShoppingCart.Add(shoppingCart);
+                    _unitOfWork.Save();
+
+                    // Log cart creation information
+                    Log.Information("Cart created for User {UserId}. ProductId: {ProductId}, Quantity: {Quantity} at {Timestamp}",
+                                    userId, shoppingCart.ProductId, shoppingCart.Count, DateTime.Now);
+
+                    HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == userId).Count());
+                }
+
+                TempData["success"] = "Cart updated successfully";
+
+                return RedirectToAction(nameof(Index));
             }
-            else
+            catch (Exception ex)
             {
-                //add cart 
-                _unitOfWork.ShoppingCart.Add(shoppingCart);
-                _unitOfWork.Save();
-                HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCart.GetAll(x => x.ApplicationUserId == userId).Count());
-            }
-            TempData["success"] = "Cart updated successfully";
+                // Log the error
+                Log.Error(ex, "An error occurred while processing the cart operation for User {UserId} at {Timestamp}. Error message: {ErrorMessage}", userId, DateTime.Now, ex.Message);
 
-            return RedirectToAction(nameof(Index));
+                // Optionally, you can handle the error in a meaningful way, like showing a user-friendly error message or redirecting to an error page.
+                TempData["error"] = "An error occurred while processing your cart. Please try again later.";
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         [HttpGet("Privacy")]
