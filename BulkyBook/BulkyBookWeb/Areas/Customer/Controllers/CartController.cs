@@ -150,7 +150,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             }
 
             // Log order details before adding to the database
-            Log.Information("Order details before saving: {OrderHeader}", ShoppingCartViewModel.OrderHeader);
+            Log.Information("Order details before saving: {@OrderHeader}", ShoppingCartViewModel.OrderHeader);
             foreach (var cart in ShoppingCartViewModel.ShoppingCartList)
             {
                 Log.Information("Order detail for ProductId {ProductId}: Price: {Price}, Quantity: {Quantity}", cart.ProductId, cart.Price, cart.Count);
