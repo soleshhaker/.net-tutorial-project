@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bulky.Models", "Bulky.Model
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bulky.Utility", "Bulky.Utility\Bulky.Utility.csproj", "{2ED4C599-8985-4F48-B54E-396484B2109E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess.Tests", "DataAccess.Tests\DataAccess.Tests.csproj", "{99902D62-AA81-4742-8FD6-40122B942628}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess.Tests", "DataAccess.Tests\DataAccess.Tests.csproj", "{99902D62-AA81-4742-8FD6-40122B942628}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulkyBookWeb.Tests", "BulkyBookWeb.Tests\BulkyBookWeb.Tests.csproj", "{77F0BBE7-1299-4957-B5DF-EE526E9E9E66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BulkyBookWeb.Tests", "BulkyBookWeb.Tests\BulkyBookWeb.Tests.csproj", "{77F0BBE7-1299-4957-B5DF-EE526E9E9E66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mapping", "Mapping\Mapping.csproj", "{232F4F02-BC61-4486-878A-9D31D9406381}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{77F0BBE7-1299-4957-B5DF-EE526E9E9E66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77F0BBE7-1299-4957-B5DF-EE526E9E9E66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77F0BBE7-1299-4957-B5DF-EE526E9E9E66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{232F4F02-BC61-4486-878A-9D31D9406381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{232F4F02-BC61-4486-878A-9D31D9406381}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{232F4F02-BC61-4486-878A-9D31D9406381}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{232F4F02-BC61-4486-878A-9D31D9406381}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

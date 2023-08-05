@@ -11,6 +11,7 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Serilog;
+using Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,7 @@ builder.Services.AddLogging(loggingBuilder =>
     loggingBuilder.ClearProviders();
     loggingBuilder.AddSerilog(dispose: true);
 });
+builder.Services.AddAutoMapper(typeof(Program), typeof(OrderHeaderProfile));
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(

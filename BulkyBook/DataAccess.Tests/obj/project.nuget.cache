@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "AeQ+NBMLqE121ANNUuxCqeqbfobRulE0hEXArx8qvjjQf48nD61XKe8m0H386p1u9OfR7sL4Cydchz+DuRABcg==",
+  "dgSpecHash": "u51tA0zvtw0dkbWREKlgMOJhJ/D+Zkm4YwTK7m60OucwThSr6Zf48LZtwpCL29MZduPk6GetAsPz4OISEtff0A==",
   "success": true,
   "projectFilePath": "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\DataAccess.Tests\\DataAccess.Tests.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Tobi\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\Tobi\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\Tobi\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\Tobi\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
     "C:\\Users\\Tobi\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
@@ -107,7 +109,7 @@
     "C:\\Users\\Tobi\\.nuget\\packages\\microsoft.codeanalysis.scripting.common\\4.4.0\\microsoft.codeanalysis.scripting.common.4.4.0.nupkg.sha512",
     "C:\\Users\\Tobi\\.nuget\\packages\\microsoft.codeanalysis.workspaces.common\\4.4.0\\microsoft.codeanalysis.workspaces.common.4.4.0.nupkg.sha512",
     "C:\\Users\\Tobi\\.nuget\\packages\\microsoft.codecoverage\\17.6.3\\microsoft.codecoverage.17.6.3.nupkg.sha512",
-    "C:\\Users\\Tobi\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\Tobi\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Tobi\\.nuget\\packages\\microsoft.data.sqlclient\\5.0.2\\microsoft.data.sqlclient.5.0.2.nupkg.sha512",
     "C:\\Users\\Tobi\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\5.0.1\\microsoft.data.sqlclient.sni.runtime.5.0.1.nupkg.sha512",
     "C:\\Users\\Tobi\\.nuget\\packages\\microsoft.diasymreader\\1.4.0\\microsoft.diasymreader.1.4.0.nupkg.sha512",
