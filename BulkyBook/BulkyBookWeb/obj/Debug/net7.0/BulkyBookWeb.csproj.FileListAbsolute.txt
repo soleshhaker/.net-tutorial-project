@@ -287,3 +287,7 @@ C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Serilog.
 C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Serilog.Sinks.Console.dll
 C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Serilog.Sinks.Debug.dll
 C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Serilog.Sinks.File.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\AutoMapper.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Mapping.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Mapping.pdb

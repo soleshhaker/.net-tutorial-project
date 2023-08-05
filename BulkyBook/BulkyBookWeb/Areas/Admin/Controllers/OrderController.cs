@@ -1,4 +1,5 @@
-﻿using Bulky.DataAccess.Repository.IRepository;
+﻿using AutoMapper;
+using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
 using Bulky.Models.ViewModels;
 using Bulky.Utility;
@@ -19,11 +20,13 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
     public class OrderController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
         [BindProperty]
         public OrderViewModel OrderViewModel { get; set; }
-        public OrderController(IUnitOfWork unitOfWork)
+        public OrderController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         [HttpGet("Index")]
@@ -85,20 +88,8 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             try
             {
                 var orderHeaderFromDb = _unitOfWork.OrderHeader.GetFirstOrDefault(x => x.Id == OrderViewModel.OrderHeader.Id);
-                orderHeaderFromDb.Name = OrderViewModel.OrderHeader.Name;
-                orderHeaderFromDb.PhoneNumber = OrderViewModel.OrderHeader.PhoneNumber;
-                orderHeaderFromDb.StreetAddress = OrderViewModel.OrderHeader.StreetAddress;
-                orderHeaderFromDb.City = OrderViewModel.OrderHeader.City;
-                orderHeaderFromDb.State = OrderViewModel.OrderHeader.State;
-                orderHeaderFromDb.PostalCode = OrderViewModel.OrderHeader.PostalCode;
-                if (!string.IsNullOrEmpty(OrderViewModel.OrderHeader.Carrier))
-                {
-                    orderHeaderFromDb.Carrier = OrderViewModel.OrderHeader.Carrier;
-                }
-                if (!string.IsNullOrEmpty(OrderViewModel.OrderHeader.TrackingNumber))
-                {
-                    orderHeaderFromDb.TrackingNumber = OrderViewModel.OrderHeader.TrackingNumber;
-                }
+                orderHeaderFromDb = _mapper.Map(OrderViewModel, orderHeaderFromDb);
+
                 _unitOfWork.OrderHeader.Update(orderHeaderFromDb);
                 _unitOfWork.Save();
 

@@ -1,0 +1,15 @@
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\Mapping\bin\Debug\net7.0\Mapping.deps.json
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\Mapping\bin\Debug\net7.0\Mapping.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\Mapping\bin\Debug\net7.0\Mapping.pdb
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\Mapping\bin\Debug\net7.0\Bulky.Models.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\Mapping\bin\Debug\net7.0\Bulky.Models.pdb
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\Mapping\obj\Debug\net7.0\Mapping.csproj.AssemblyReference.cache
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\Mapping\obj\Debug\net7.0\Mapping.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\Mapping\obj\Debug\net7.0\Mapping.AssemblyInfoInputs.cache
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\Mapping\obj\Debug\net7.0\Mapping.AssemblyInfo.cs
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\Mapping\obj\Debug\net7.0\Mapping.csproj.CoreCompileInputs.cache
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\Mapping\obj\Debug\net7.0\Mapping.csproj.CopyComplete
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\Mapping\obj\Debug\net7.0\Mapping.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\Mapping\obj\Debug\net7.0\refint\Mapping.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\Mapping\obj\Debug\net7.0\Mapping.pdb
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\Mapping\obj\Debug\net7.0\ref\Mapping.dll
