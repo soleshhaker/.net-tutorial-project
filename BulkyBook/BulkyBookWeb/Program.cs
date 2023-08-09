@@ -27,7 +27,7 @@ builder.Services.AddLogging(loggingBuilder =>
     loggingBuilder.ClearProviders();
     loggingBuilder.AddSerilog(dispose: true);
 });
-builder.Services.AddAutoMapper(typeof(Program), typeof(OrderHeaderProfile));
+builder.Services.AddAutoMapper(typeof(Program), typeof(OrderHeaderProfile), typeof(ProductProfile));
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ApplicationDBContext>(options => options.UseSqlServer(
