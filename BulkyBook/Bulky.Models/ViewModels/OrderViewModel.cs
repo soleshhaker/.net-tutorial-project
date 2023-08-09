@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Bulky.Models.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Bulky.Models.ViewModels
 {
     public class OrderViewModel
     {
-        public OrderHeader OrderHeader { get; set; }
+        public OrderHeaderDTO OrderHeaderDTO { get; set; }
         public IEnumerable<OrderDetail> OrderDetail { get; set; }
     }
 }

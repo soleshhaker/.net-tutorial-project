@@ -1,7 +1,8 @@
 ﻿@model OrderViewModel
 
 <form method="post" asp-action="Details_PAY_NOW">
-    <input asp-for="OrderHeader.Id" hidden />
+    <input asp-for="OrderHeaderDTO.Id" hidden />
+    <input asp-for="OrderHeaderDTO.ApplicationUserId" hidden />
     <br />
     <div class="container">
         <div class="card">
@@ -27,12 +28,12 @@
                                 <div class="col-9">
                                     @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                                     {
-                                        <input asp-for="OrderHeader.Name" type="text" class="form-control">
-                                        <span asp-validation-for="OrderHeader.Name" class="text-danger"></span>
+                                        <input asp-for="OrderHeaderDTO.Name" type="text" class="form-control">
+                                        <span asp-validation-for="OrderHeaderDTO.Name" class="text-danger"></span>
                                     }
                                     else
                                     {
-                                        <input asp-for="OrderHeader.Name" readonly type="text" class="form-control">
+                                        <input asp-for="OrderHeaderDTO.Name" readonly type="text" class="form-control">
                                     }
                                 </div>
                             </div>
@@ -42,12 +43,12 @@
                                 <div class="col-9">
                                     @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                                     {
-                                        <input asp-for="OrderHeader.PhoneNumber" type="text" class="form-control">
-                                        <span asp-validation-for="OrderHeader.PhoneNumber" class="text-danger"></span>
+                                        <input asp-for="OrderHeaderDTO.PhoneNumber" type="text" class="form-control">
+                                        <span asp-validation-for="OrderHeaderDTO.PhoneNumber" class="text-danger"></span>
                                     }
                                     else
                                     {
-                                        <input asp-for="OrderHeader.PhoneNumber" readonly type="text" class="form-control">
+                                        <input asp-for="OrderHeaderDTO.PhoneNumber" readonly type="text" class="form-control">
                                     }
                                 </div>
                             </div>
@@ -56,12 +57,12 @@
                                 <div class="col-9">
                                     @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                                     {
-                                        <input asp-for="OrderHeader.StreetAddress" type="text" class="form-control">
-                                        <span asp-validation-for="OrderHeader.StreetAddress" class="text-danger"></span>
+                                        <input asp-for="OrderHeaderDTO.StreetAddress" type="text" class="form-control">
+                                        <span asp-validation-for="OrderHeaderDTO.StreetAddress" class="text-danger"></span>
                                     }
                                     else
                                     {
-                                        <input asp-for="OrderHeader.StreetAddress" readonly type="text" class="form-control">
+                                        <input asp-for="OrderHeaderDTO.StreetAddress" readonly type="text" class="form-control">
                                     }
                                 </div>
                             </div>
@@ -70,12 +71,12 @@
                                 <div class="col-9">
                                     @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                                     {
-                                        <input asp-for="OrderHeader.City" type="text" class="form-control">
-                                        <span asp-validation-for="OrderHeader.City" class="text-danger"></span>
+                                        <input asp-for="OrderHeaderDTO.City" type="text" class="form-control">
+                                        <span asp-validation-for="OrderHeaderDTO.City" class="text-danger"></span>
                                     }
                                     else
                                     {
-                                        <input asp-for="OrderHeader.City" readonly type="text" class="form-control">
+                                        <input asp-for="OrderHeaderDTO.City" readonly type="text" class="form-control">
                                     }
                                 </div>
                             </div>
@@ -84,12 +85,12 @@
                                 <div class="col-9">
                                     @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                                     {
-                                        <input asp-for="OrderHeader.State" type="text" class="form-control">
-                                        <span asp-validation-for="OrderHeader.State" class="text-danger"></span>
+                                        <input asp-for="OrderHeaderDTO.State" type="text" class="form-control">
+                                        <span asp-validation-for="OrderHeaderDTO.State" class="text-danger"></span>
                                     }
                                     else
                                     {
-                                        <input asp-for="OrderHeader.State" readonly type="text" class="form-control">
+                                        <input asp-for="OrderHeaderDTO.State" readonly type="text" class="form-control">
                                     }
                                 </div>
                             </div>
@@ -98,25 +99,25 @@
                                 <div class="col-9">
                                     @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                                     {
-                                        <input asp-for="OrderHeader.PostalCode" type="text" class="form-control">
-                                        <span asp-validation-for="OrderHeader.PostalCode" class="text-danger"></span>
+                                        <input asp-for="OrderHeaderDTO.PostalCode" type="text" class="form-control">
+                                        <span asp-validation-for="OrderHeaderDTO.PostalCode" class="text-danger"></span>
                                     }
                                     else
                                     {
-                                        <input asp-for="OrderHeader.PostalCode" readonly type="text" class="form-control">
+                                        <input asp-for="OrderHeaderDTO.PostalCode" readonly type="text" class="form-control">
                                     }
                                 </div>
                             </div>
                             <div class="row my-1">
                                 <div class="col-3">Email</div>
                                 <div class="col-9">
-                                    <input asp-for="OrderHeader.ApplicationUser.Email" readonly type="text" class="form-control">
+                                    <input asp-for="OrderHeaderDTO.ApplicationUser.Email" readonly type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="row my-1">
                                 <div class="col-3">Order Date</div>
                                 <div class="col-9">
-                                    <input value="@Model.OrderHeader.OrderDate.ToShortDateString()" readonly type="text" class="form-control">
+                                    <input value="@Model.OrderHeaderDTO.OrderDate.ToShortDateString()" readonly type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="row my-1">
@@ -124,12 +125,12 @@
                                 <div class="col-9">
                                     @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                                     {
-                                        <input asp-for="OrderHeader.Carrier" id="carrier" type="text" class="form-control">
-                                        <span asp-validation-for="OrderHeader.Carrier" class="text-danger"></span>
+                                        <input asp-for="OrderHeaderDTO.Carrier" id="carrier" type="text" class="form-control">
+                                        <span asp-validation-for="OrderHeaderDTO.Carrier" class="text-danger"></span>
                                     }
                                     else
                                     {
-                                        <input asp-for="OrderHeader.Carrier" readonly type="text" class="form-control">
+                                        <input asp-for="OrderHeaderDTO.Carrier" readonly type="text" class="form-control">
                                     }
                                 </div>
                             </div>
@@ -139,18 +140,18 @@
                                 <div class="col-9">
                                     @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                                     {
-                                        <input asp-for="OrderHeader.TrackingNumber" id="trackingNumber" type="text" class="form-control">
+                                        <input asp-for="OrderHeaderDTO.TrackingNumber" id="trackingNumber" type="text" class="form-control">
                                     }
                                     else
                                     {
-                                        <input asp-for="OrderHeader.TrackingNumber" readonly type="text" class="form-control">
+                                        <input asp-for="OrderHeaderDTO.TrackingNumber" readonly type="text" class="form-control">
                                     }
                                 </div>
                             </div>
                             <div class="row my-1">
                                 <div class="col-3">Shipping Date</div>
                                 <div class="col-9">
-                                    <input value="@Model.OrderHeader.ShippingDate.ToShortDateString()" readonly type="text" class="form-control">
+                                    <input value="@Model.OrderHeaderDTO.ShippingDate.ToShortDateString()" readonly type="text" class="form-control">
                                 </div>
                             </div>
                             @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
@@ -158,37 +159,37 @@
                                 <div class="row my-1">
                                     <div class="col-3">Session ID</div>
                                     <div class="col-9">
-                                        <input asp-for="OrderHeader.SessionId" readonly type="text" class="form-control">
+                                        <input asp-for="OrderHeaderDTO.SessionId" readonly type="text" class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="row my-1">
                                     <div class="col-3">Payment Intent ID</div>
                                     <div class="col-9">
-                                        <input asp-for="OrderHeader.PaymentIntentId" readonly type="text" class="form-control">
+                                        <input asp-for="OrderHeaderDTO.PaymentIntentId" readonly type="text" class="form-control">
                                     </div>
                                 </div>
                             }
                             <div class="row my-1">
-                                @if (Model.OrderHeader.SessionId == null)
+                                @if (Model.OrderHeaderDTO.SessionId == null)
                                 {
                                     <div class="col-3">Payment Due Date</div>
                                     <div class="col-9">
-                                        <input value="@Model.OrderHeader.PaymentDueDate.ToShortDateString()" readonly type="text" class="form-control">
+                                        <input value="@Model.OrderHeaderDTO.PaymentDueDate.ToShortDateString()" readonly type="text" class="form-control">
                                     </div>
                                 }
                                 else
                                 {
                                     <div class="col-3">Payment Date</div>
                                     <div class="col-9">
-                                        <input value="@Model.OrderHeader.PaymentDate.ToShortDateString()" readonly type="text" class="form-control">
+                                        <input value="@Model.OrderHeaderDTO.PaymentDate.ToShortDateString()" readonly type="text" class="form-control">
                                     </div>
                                 }
                             </div>
                             <div class="row my-1">
                                 <div class="col-3">Payment Status</div>
                                 <div class="col-9">
-                                    <input asp-for="OrderHeader.PaymentStatus" readonly type="text" class="form-control">
+                                    <input asp-for="OrderHeaderDTO.PaymentStatus" readonly type="text" class="form-control">
                                 </div>
                             </div>
                             @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
@@ -200,7 +201,7 @@
                             <h4 class="d-flex justify-content-between align-items-center mb-3">
                                 <span class="text-primary">Order Summary</span>
                             </h4>
-                            <label class="btn btn-outline-primary form-control my-2">Order Status - @Model.OrderHeader.OrderStatus</label>
+                            <label class="btn btn-outline-primary form-control my-2">Order Status - @Model.OrderHeaderDTO.OrderStatus</label>
                             <ul class="list-group mb-3">
                                 @foreach (var detail in Model.OrderDetail)
                                 {
@@ -223,29 +224,29 @@
                                             <h5 class="text-white">TOTAL</h5>
                                         </div>
                                         <div class="col-6 text-end">
-                                            <h5 class="text-white">@Model.OrderHeader.OrderTotal.ToString("c")</h5>
+                                            <h5 class="text-white">@Model.OrderHeaderDTO.OrderTotal.ToString("c")</h5>
                                         </div>
                                     </div>
                                 </li>
                             </ul>
-                            @if (Model.OrderHeader.PaymentStatus == SD.PaymentStatusDelayedPayment &&
-                            Model.OrderHeader.OrderStatus == SD.StatusShipped)
+                            @if (Model.OrderHeaderDTO.PaymentStatus == SD.PaymentStatusDelayedPayment &&
+                            Model.OrderHeaderDTO.OrderStatus == SD.StatusShipped)
                             {
                                 <button type="submit" class="btn btn-success form-control my-1">Pay Now</button>
                             }
                             @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                             {
-                                @if (Model.OrderHeader.OrderStatus == SD.StatusApproved)
+                                @if (Model.OrderHeaderDTO.OrderStatus == SD.StatusApproved)
                                 {
                                     <button type="submit" asp-action="StartProcessing" class="btn btn-primary form-control my-1">Start Processing</button>
                                 }
-                                @if (Model.OrderHeader.OrderStatus == SD.StatusInProcess)
+                                @if (Model.OrderHeaderDTO.OrderStatus == SD.StatusInProcess)
                                 {
                                     <button onclick="return validateInput()" asp-action="ShipOrder" class="btn btn-primary form-control my-1">Ship Order</button>
                                 }
-                                @if (Model.OrderHeader.OrderStatus != SD.StatusRefunded &&
-                               Model.OrderHeader.OrderStatus != SD.StatusCancelled &&
-                               Model.OrderHeader.OrderStatus != SD.StatusShipped)
+                                @if (Model.OrderHeaderDTO.OrderStatus != SD.StatusRefunded &&
+                               Model.OrderHeaderDTO.OrderStatus != SD.StatusCancelled &&
+                               Model.OrderHeaderDTO.OrderStatus != SD.StatusShipped)
                                 {
                                     <button type="submit" asp-action="CancelOrder" class="btn btn-danger form-control my-1">Cancel Order</button>
                                 }
