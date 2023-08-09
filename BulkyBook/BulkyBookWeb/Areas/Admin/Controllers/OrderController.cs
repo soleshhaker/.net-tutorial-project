@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
+using Bulky.Models.DTO;
 using Bulky.Models.ViewModels;
 using Bulky.Utility;
 using Microsoft.AspNetCore.Authorization;
@@ -59,7 +60,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             {
                 OrderViewModel = new OrderViewModel
                 {
-                    OrderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(x => x.Id == orderId, includeProperties: "ApplicationUser"),
+                    OrderHeaderDTO = _mapper.Map<OrderHeaderDTO>(_unitOfWork.OrderHeader.GetFirstOrDefault(x => x.Id == orderId, includeProperties: "ApplicationUser")),
                     OrderDetail = _unitOfWork.OrderDetail.GetAll(x => x.OrderHeaderId == orderId, includeProperties: "Product")
                 };
 
@@ -87,14 +88,13 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         {
             try
             {
-                var orderHeaderFromDb = _unitOfWork.OrderHeader.GetFirstOrDefault(x => x.Id == OrderViewModel.OrderHeader.Id);
-                orderHeaderFromDb = _mapper.Map(OrderViewModel, orderHeaderFromDb);
-
+                var orderHeaderFromDb = _unitOfWork.OrderHeader.GetFirstOrDefault(x => x.Id == OrderViewModel.OrderHeaderDTO.Id);
+                orderHeaderFromDb = _mapper.Map(OrderViewModel.OrderHeaderDTO, orderHeaderFromDb);
                 _unitOfWork.OrderHeader.Update(orderHeaderFromDb);
                 _unitOfWork.Save();
 
                 // Log the successful update of order details
-                Log.Information("Order details updated successfully for Order ID {OrderId} at {Timestamp}", OrderViewModel.OrderHeader.Id, DateTime.Now);
+                Log.Information("Order details updated successfully for Order ID {OrderId} at {Timestamp}", OrderViewModel.OrderHeaderDTO.Id, DateTime.Now);
 
                 TempData["Success"] = "Order Details Updated Successfully.";
                 return RedirectToAction(nameof(Details), new { orderId = orderHeaderFromDb.Id });
@@ -102,10 +102,10 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error when an exception occurs during order details update
-                Log.Error(ex, "An error occurred while updating order details for Order ID {OrderId} at {Timestamp}. Error message: {ErrorMessage}", OrderViewModel.OrderHeader.Id, DateTime.Now, ex.Message);
+                Log.Error(ex, "An error occurred while updating order details for Order ID {OrderId} at {Timestamp}. Error message: {ErrorMessage}", OrderViewModel.OrderHeaderDTO.Id, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while updating order details. Please try again later.";
-                return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.OrderHeader.Id });
+                return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.OrderHeaderDTO.Id });
             }
         }
 
@@ -116,22 +116,22 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         {
             try
             {
-                _unitOfWork.OrderHeader.UpdateStatus(OrderViewModel.OrderHeader.Id, SD.StatusInProcess);
+                _unitOfWork.OrderHeader.UpdateStatus(OrderViewModel.OrderHeaderDTO.Id, SD.StatusInProcess);
                 _unitOfWork.Save();
 
                 // Log the successful start of order processing
-                Log.Information("Order processing started successfully for Order ID {OrderId} at {Timestamp}", OrderViewModel.OrderHeader.Id, DateTime.Now);
+                Log.Information("Order processing started successfully for Order ID {OrderId} at {Timestamp}", OrderViewModel.OrderHeaderDTO.Id, DateTime.Now);
 
                 TempData["Success"] = "Order Details Updated Successfully.";
-                return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.OrderHeader.Id });
+                return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.OrderHeaderDTO.Id });
             }
             catch (Exception ex)
             {
                 // Log the error when an exception occurs during order processing start
-                Log.Error(ex, "An error occurred while starting order processing for Order ID {OrderId} at {Timestamp}. Error message: {ErrorMessage}", OrderViewModel.OrderHeader.Id, DateTime.Now, ex.Message);
+                Log.Error(ex, "An error occurred while starting order processing for Order ID {OrderId} at {Timestamp}. Error message: {ErrorMessage}", OrderViewModel.OrderHeaderDTO.Id, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while starting order processing. Please try again later.";
-                return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.OrderHeader.Id });
+                return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.OrderHeaderDTO.Id });
             }
         }
 
@@ -142,9 +142,9 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         {
             try
             {
-                var orderHeaderFromDb = _unitOfWork.OrderHeader.GetFirstOrDefault(x => x.Id == OrderViewModel.OrderHeader.Id);
-                orderHeaderFromDb.TrackingNumber = OrderViewModel.OrderHeader.TrackingNumber;
-                orderHeaderFromDb.Carrier = OrderViewModel.OrderHeader.Carrier;
+                var orderHeaderFromDb = _unitOfWork.OrderHeader.GetFirstOrDefault(x => x.Id == OrderViewModel.OrderHeaderDTO.Id);
+                orderHeaderFromDb.TrackingNumber = OrderViewModel.OrderHeaderDTO.TrackingNumber;
+                orderHeaderFromDb.Carrier = OrderViewModel.OrderHeaderDTO.Carrier;
                 orderHeaderFromDb.OrderStatus = SD.StatusShipped;
                 orderHeaderFromDb.ShippingDate = DateTime.Now;
                 if (orderHeaderFromDb.PaymentStatus == SD.PaymentStatusDelayedPayment)
@@ -155,19 +155,19 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                 _unitOfWork.Save();
 
                 // Log the successful shipment of the order
-                Log.Information("Order {OrderId} shipped successfully at {Timestamp}", OrderViewModel.OrderHeader.Id, DateTime.Now);
+                Log.Information("Order {OrderId} shipped successfully at {Timestamp}", OrderViewModel.OrderHeaderDTO.Id, DateTime.Now);
 
                 TempData["Success"] = "Order Shipped Successfully.";
 
-                return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.OrderHeader.Id });
+                return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.OrderHeaderDTO.Id });
             }
             catch (Exception ex)
             {
                 // Log the error when an exception occurs during order shipment
-                Log.Error(ex, "An error occurred while shipping order {OrderId} at {Timestamp}. Error message: {ErrorMessage}", OrderViewModel.OrderHeader.Id, DateTime.Now, ex.Message);
+                Log.Error(ex, "An error occurred while shipping order {OrderId} at {Timestamp}. Error message: {ErrorMessage}", OrderViewModel.OrderHeaderDTO.Id, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while shipping the order. Please try again later.";
-                return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.OrderHeader.Id });
+                return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.OrderHeaderDTO.Id });
             }
         }
 
@@ -178,7 +178,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         {
             try
             {
-                var orderHeaderFromDb = _unitOfWork.OrderHeader.GetFirstOrDefault(x => x.Id == OrderViewModel.OrderHeader.Id);
+                var orderHeaderFromDb = _unitOfWork.OrderHeader.GetFirstOrDefault(x => x.Id == OrderViewModel.OrderHeaderDTO.Id);
                 if (orderHeaderFromDb.PaymentStatus == SD.PaymentStatusApproved)
                 {
                     //refund
@@ -199,19 +199,19 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                 _unitOfWork.Save();
 
                 // Log the successful cancellation of the order
-                Log.Information("Order {OrderId} canceled successfully at {Timestamp}", OrderViewModel.OrderHeader.Id, DateTime.Now);
+                Log.Information("Order {OrderId} canceled successfully at {Timestamp}", OrderViewModel.OrderHeaderDTO.Id, DateTime.Now);
 
                 TempData["Success"] = "Order Canceled Successfully.";
 
-                return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.OrderHeader.Id });
+                return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.OrderHeaderDTO.Id });
             }
             catch (Exception ex)
             {
                 // Log the error when an exception occurs during order cancellation
-                Log.Error(ex, "An error occurred while canceling order {OrderId} at {Timestamp}. Error message: {ErrorMessage}", OrderViewModel.OrderHeader.Id, DateTime.Now, ex.Message);
+                Log.Error(ex, "An error occurred while canceling order {OrderId} at {Timestamp}. Error message: {ErrorMessage}", OrderViewModel.OrderHeaderDTO.Id, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while canceling the order. Please try again later.";
-                return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.OrderHeader.Id });
+                return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.OrderHeaderDTO.Id });
             }
         }
 
@@ -222,18 +222,19 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         {
             try
             {
-                OrderViewModel.OrderHeader = _unitOfWork.OrderHeader
-                    .GetFirstOrDefault(x => x.Id == OrderViewModel.OrderHeader.Id, includeProperties: "ApplicationUser");
-                OrderViewModel.OrderDetail = _unitOfWork.OrderDetail
-                    .GetAll(x => x.OrderHeaderId == OrderViewModel.OrderHeader.Id, includeProperties: "Product");
+                OrderViewModel.OrderHeaderDTO = _mapper.Map<OrderHeaderDTO>(
+                    _unitOfWork.OrderHeader.GetFirstOrDefault(x => x.Id == OrderViewModel.OrderHeaderDTO.Id, includeProperties: "ApplicationUser"));
+
+                OrderViewModel.OrderDetail = _unitOfWork.OrderDetail.GetAll(
+                    x => x.OrderHeaderId == OrderViewModel.OrderHeaderDTO.Id, includeProperties: "Product");
 
                 //stripe
                 var domain = Request.Scheme + "://" + Request.Host.Value + "/";
                 var options = new SessionCreateOptions
                 {
 
-                    SuccessUrl = domain + $"admin/order/PaymentConfirmation?orderHeaderId={OrderViewModel.OrderHeader.Id}",
-                    CancelUrl = domain + $"admin/order/details?orderId={OrderViewModel.OrderHeader.Id}",
+                    SuccessUrl = domain + $"admin/order/PaymentConfirmation?orderHeaderId={OrderViewModel.OrderHeaderDTO.Id}",
+                    CancelUrl = domain + $"admin/order/details?orderId={OrderViewModel.OrderHeaderDTO.Id}",
                     LineItems = new List<SessionLineItemOptions>(),
                     Mode = "payment",
                 };
@@ -258,7 +259,8 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 
                 var service = new SessionService();
                 Session session = service.Create(options);
-                _unitOfWork.OrderHeader.UpdateStripePaymentId(OrderViewModel.OrderHeader.Id, session.Id, session.PaymentIntentId);
+                _unitOfWork.OrderHeader.UpdateStripePaymentId(
+                    OrderViewModel.OrderHeaderDTO.Id, session.Id, session.PaymentIntentId);
                 _unitOfWork.Save();
                 Response.Headers.Add("Location", session.Url);
                 return new StatusCodeResult(303);
@@ -266,12 +268,13 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 // Log the error when an exception occurs during payment process
-                Log.Error(ex, "An error occurred while processing the payment for order {OrderId} at {Timestamp}. Error message: {ErrorMessage}", OrderViewModel.OrderHeader.Id, DateTime.Now, ex.Message);
+                Log.Error(ex, "An error occurred while processing the payment for order {OrderId} at {Timestamp}. Error message: {ErrorMessage}", OrderViewModel.OrderHeaderDTO.Id, DateTime.Now, ex.Message);
 
                 TempData["error"] = "An error occurred while processing the payment. Please try again later.";
-                return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.OrderHeader.Id });
+                return RedirectToAction(nameof(Details), new { orderId = OrderViewModel.OrderHeaderDTO.Id });
             }
         }
+
 
         [HttpGet]
         [Route("PaymentConfirmation")]
