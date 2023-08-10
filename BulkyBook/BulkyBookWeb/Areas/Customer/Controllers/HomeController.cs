@@ -6,6 +6,7 @@ using Bulky.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Serilog;
 using System.Diagnostics;
 using System.Security.Claims;
@@ -18,24 +19,45 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-
-        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly IMemoryCache _memoryCache;
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork, IMapper mapper, IMemoryCache memoryCache)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _memoryCache = memoryCache;
         }
 
-        [HttpGet("")]
+        [HttpGet("")]    
         public IActionResult Index()
         {
-            IEnumerable<Product> products = _unitOfWork.Product.GetAll(includeProperties: "ProductImages");
+            IEnumerable<ProductDto> productDtos;
 
-            IEnumerable<ProductDto> productDtos = _mapper.Map<IEnumerable<ProductDto>>(products);
+            // Attempt to get the cached data
+            if (!_memoryCache.TryGetValue("ProductList", out productDtos))
+            {
+                // Data not found in cache, fetch from the data source
+                IEnumerable<Product> products = _unitOfWork.Product.GetAll(includeProperties: "ProductImages");
+                productDtos = _mapper.Map<IEnumerable<ProductDto>>(products);
 
-            int productCount = productDtos.Count(); // Get the number of products returned
+                var cacheEntryOptions = new MemoryCacheEntryOptions().
+                    SetSlidingExpiration(TimeSpan.FromSeconds(60))
+                    .SetAbsoluteExpiration(TimeSpan.FromSeconds(3600))
+                    .SetPriority(CacheItemPriority.Normal);
+                // Store the fetched data in cache
+                _memoryCache.Set("ProductList", productDtos, cacheEntryOptions); 
+            }
+
+            int productCount = productDtos.Count();
             Log.Information("Returned {ProductCount} product(s) at {Timestamp}", productCount, DateTime.Now);
             return View(productDtos);
+        }
+
+        public IActionResult ClearCache()
+        {
+            _memoryCache.Remove("ProductList");
+            Log.Information("Cleared ProductList cache at {Timestamp}", DateTime.Now);
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet("Details")]
