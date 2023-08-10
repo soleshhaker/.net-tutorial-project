@@ -143,8 +143,8 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             try
             {
                 var orderHeaderFromDb = _unitOfWork.OrderHeader.GetFirstOrDefault(x => x.Id == OrderViewModel.OrderHeaderDTO.Id);
-                orderHeaderFromDb.TrackingNumber = OrderViewModel.OrderHeaderDTO.TrackingNumber;
-                orderHeaderFromDb.Carrier = OrderViewModel.OrderHeaderDTO.Carrier;
+                orderHeaderFromDb = _mapper.Map(OrderViewModel.OrderHeaderDTO, orderHeaderFromDb);
+
                 orderHeaderFromDb.OrderStatus = SD.StatusShipped;
                 orderHeaderFromDb.ShippingDate = DateTime.Now;
                 if (orderHeaderFromDb.PaymentStatus == SD.PaymentStatusDelayedPayment)
