@@ -1,4 +1,5 @@
-﻿using Bulky.DataAccess.Repository.IRepository;
+﻿using AutoMapper;
+using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
 using Bulky.Models.ViewModels;
 using Bulky.Utility;
@@ -16,12 +17,15 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
     public class CartController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+
         [BindProperty]
         public ShoppingCartViewModel ShoppingCartViewModel { get; set; }
 
-        public CartController(IUnitOfWork unitOfWork)
+        public CartController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         [HttpGet("Index")]
@@ -86,13 +90,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
                     OrderHeader = new()
                 };
                 ShoppingCartViewModel.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.GetFirstOrDefault(x => x.Id == userId);
-
-                ShoppingCartViewModel.OrderHeader.Name = ShoppingCartViewModel.OrderHeader.ApplicationUser.Name;
-                ShoppingCartViewModel.OrderHeader.PhoneNumber = ShoppingCartViewModel.OrderHeader.ApplicationUser.PhoneNumber;
-                ShoppingCartViewModel.OrderHeader.StreetAddress = ShoppingCartViewModel.OrderHeader.ApplicationUser.StreetAddress;
-                ShoppingCartViewModel.OrderHeader.City = ShoppingCartViewModel.OrderHeader.ApplicationUser.City;
-                ShoppingCartViewModel.OrderHeader.State = ShoppingCartViewModel.OrderHeader.ApplicationUser.State;
-                ShoppingCartViewModel.OrderHeader.PostalCode = ShoppingCartViewModel.OrderHeader.ApplicationUser.PostalCode;
+                ShoppingCartViewModel.OrderHeader = _mapper.Map(ShoppingCartViewModel.OrderHeader.ApplicationUser, ShoppingCartViewModel.OrderHeader);
 
                 foreach (var cart in ShoppingCartViewModel.ShoppingCartList)
                 {

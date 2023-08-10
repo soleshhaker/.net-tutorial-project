@@ -19,8 +19,6 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-
-
         public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _logger = logger;
