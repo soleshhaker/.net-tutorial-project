@@ -14,6 +14,7 @@ namespace Mapping
     {
         public ProductProfile()
         {
+            CreateMap<ProductImage, ProductImageDto>();
             CreateMap<Product, ProductDto>()
                 .ForMember(dest => dest.ProductImage, opt => opt.MapFrom(src => src.ProductImages.FirstOrDefault()));
         }

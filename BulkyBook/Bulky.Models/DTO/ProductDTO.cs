@@ -12,6 +12,6 @@ namespace Bulky.Models.DTO
         public string Author { get; set; }
         public double ListPrice { get; set; }
         public double Price100 { get; set; }
-        public ProductImage ProductImage { get; set; }
+        public ProductImageDto ProductImage { get; set; }
     }
 }
