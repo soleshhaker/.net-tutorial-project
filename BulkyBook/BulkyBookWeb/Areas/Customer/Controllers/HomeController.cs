@@ -6,7 +6,9 @@ using Bulky.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
 using Serilog;
 using System.Diagnostics;
 using System.Security.Claims;
@@ -19,34 +21,42 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IMemoryCache _memoryCache;
-        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork, IMapper mapper, IMemoryCache memoryCache)
+        private readonly IDistributedCache _distributedCache;
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork, IMapper mapper, IDistributedCache distributedCache)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _memoryCache = memoryCache;
+            _distributedCache = distributedCache;
         }
 
         [HttpGet("")]    
         public IActionResult Index()
         {
             IEnumerable<ProductDto> productDtos;
+            string key = $"ProductList";
 
-            // Attempt to get the cached data
-            if (!_memoryCache.TryGetValue("ProductList", out productDtos))
+            string? cachedProducts = _distributedCache.GetString(key);
+
+            IEnumerable<Product> products;
+            if (string.IsNullOrEmpty(cachedProducts))
             {
-                // Data not found in cache, fetch from the data source
-                IEnumerable<Product> products = _unitOfWork.Product.GetAll(includeProperties: "ProductImages");
+                products = _unitOfWork.Product.GetAll(includeProperties: "ProductImages");
                 productDtos = _mapper.Map<IEnumerable<ProductDto>>(products);
+                if (productDtos == null || productDtos.Count() == 0)
+                {
+                    return View(productDtos);
+                }
+                var cacheEntryOptions = new DistributedCacheEntryOptions
+                {
+                    AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1),
+                    SlidingExpiration = TimeSpan.FromSeconds(60)
+                };
 
-                var cacheEntryOptions = new MemoryCacheEntryOptions().
-                    SetSlidingExpiration(TimeSpan.FromSeconds(60))
-                    .SetAbsoluteExpiration(TimeSpan.FromSeconds(3600))
-                    .SetPriority(CacheItemPriority.Normal);
-                // Store the fetched data in cache
-                _memoryCache.Set("ProductList", productDtos, cacheEntryOptions); 
+                _distributedCache.SetString(key, JsonConvert.SerializeObject(productDtos), cacheEntryOptions);
+                return View(productDtos);
             }
+            productDtos = JsonConvert.DeserializeObject<IEnumerable<ProductDto>>(cachedProducts);
 
             int productCount = productDtos.Count();
             Log.Information("Returned {ProductCount} product(s) at {Timestamp}", productCount, DateTime.Now);
@@ -55,7 +65,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
 
         public IActionResult ClearCache()
         {
-            _memoryCache.Remove("ProductList");
+            _distributedCache.Remove("ProductList");
             Log.Information("Cleared ProductList cache at {Timestamp}", DateTime.Now);
             return RedirectToAction(nameof(Index));
         }

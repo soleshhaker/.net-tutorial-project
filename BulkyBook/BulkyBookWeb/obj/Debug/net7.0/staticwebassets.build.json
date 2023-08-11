@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "5aSerKUVuldaTBzWB7Z9dU3YYXz6gg4o8mPVYx8LUlc=",
+  "Hash": "6T8hShIxoqpI6vrsRoec/KXyHwYt5MeJ21swdEaGuE8=",
   "Source": "BulkyBookWeb",
   "BasePath": "_content/BulkyBookWeb",
   "Mode": "Default",
@@ -1190,12 +1190,12 @@
       "OriginalItemSpec": "wwwroot\\images\\products\\product-11\\5db9330e-0897-4a12-96e3-4c35e07e3acc.png"
     },
     {
-      "Identity": "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\BulkyBookWeb\\wwwroot\\images\\products\\product-11\\eb0c1bbf-a4da-4c06-8cdd-f35fdcf1100c.png",
+      "Identity": "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\BulkyBookWeb\\wwwroot\\images\\products\\product-11\\7da4c675-073c-4357-b2bc-c781855d7319.jpg",
       "SourceId": "BulkyBookWeb",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\BulkyBookWeb\\wwwroot\\",
       "BasePath": "_content/BulkyBookWeb",
-      "RelativePath": "images/products/product-11/eb0c1bbf-a4da-4c06-8cdd-f35fdcf1100c.png",
+      "RelativePath": "images/products/product-11/7da4c675-073c-4357-b2bc-c781855d7319.jpg",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1204,7 +1204,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\products\\product-11\\eb0c1bbf-a4da-4c06-8cdd-f35fdcf1100c.png"
+      "OriginalItemSpec": "wwwroot\\images\\products\\product-11\\7da4c675-073c-4357-b2bc-c781855d7319.jpg"
     },
     {
       "Identity": "C:\\Users\\Tobi\\Desktop\\BulkyBook\\BulkyBook\\BulkyBookWeb\\wwwroot\\images\\products\\product-4\\b2f881d3-9017-4871-8fac-64fb38662ba6.jpg",
