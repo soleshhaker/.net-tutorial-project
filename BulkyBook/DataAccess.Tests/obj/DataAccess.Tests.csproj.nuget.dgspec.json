@@ -408,6 +408,18 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "AutoBogus": {
+              "target": "Package",
+              "version": "[2.13.1, )"
+            },
+            "Bogus": {
+              "target": "Package",
+              "version": "[34.0.2, )"
+            },
+            "FluentAssertions": {
+              "target": "Package",
+              "version": "[6.11.0, )"
+            },
             "Microsoft.EntityFrameworkCore.InMemory": {
               "target": "Package",
               "version": "[7.0.9, )"
