@@ -12,6 +12,7 @@ using System.Reflection;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Serilog;
 using Mapping;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -89,10 +90,12 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 app.UseRouting();
+app.UseHttpMetrics();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
 app.MapRazorPages();
+app.UseMetricServer();
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
