@@ -13,12 +13,15 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 using Serilog;
 using Mapping;
 using Prometheus;
+using Serilog.Formatting.Compact;
+using Serilog.Sinks.Http.BatchFormatters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
+    .WriteTo.Http("http://127.0.0.1:5044", null, null, null, null, null, new CompactJsonFormatter(), new ArrayBatchFormatter())
     .CreateLogger();
 
 Log.Information("Starting web application");
