@@ -306,3 +306,15 @@ C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Serilog.
 C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Serilog.Formatting.Elasticsearch.dll
 C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Serilog.Sinks.Elasticsearch.dll
 C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Serilog.Sinks.PeriodicBatching.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\OpenTelemetry.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\OpenTelemetry.Api.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\OpenTelemetry.Api.ProviderBuilderExtensions.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\OpenTelemetry.Extensions.Hosting.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\OpenTelemetry.Instrumentation.AspNetCore.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Google.Protobuf.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Grpc.Core.Api.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Grpc.Net.Client.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\Grpc.Net.Common.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\OpenTelemetry.Exporter.OpenTelemetryProtocol.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\OpenTelemetry.Instrumentation.Http.dll
+C:\Users\Tobi\Desktop\BulkyBook\BulkyBook\BulkyBookWeb\bin\Debug\net7.0\OpenTelemetry.Exporter.Console.dll

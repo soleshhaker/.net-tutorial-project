@@ -15,6 +15,9 @@ using Mapping;
 using Prometheus;
 using Serilog.Formatting.Compact;
 using Serilog.Sinks.Http.BatchFormatters;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
+using OpenTelemetry.Exporter;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +29,22 @@ Log.Logger = new LoggerConfiguration()
 
 Log.Information("Starting web application");
 builder.Host.UseSerilog();
+var serviceName = "BulkyBook";
+var serviceVersion = "1.0.0";
+builder.Services.AddOpenTelemetry()
+  .WithTracing(b =>
+  {
+      b
+      .AddConsoleExporter()
+      .AddHttpClientInstrumentation()
+      .AddAspNetCoreInstrumentation()
+      .AddOtlpExporter()
+      .AddSource(serviceName)
+      .ConfigureResource(resource =>
+          resource.AddService(
+            serviceName: serviceName,
+            serviceVersion: serviceVersion));
+  });
 builder.Services.AddLogging(loggingBuilder =>
 {
     loggingBuilder.ClearProviders();
